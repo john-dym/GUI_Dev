@@ -12,3 +12,7 @@ Design Tools
 * Edit medicine schedule
 * Check Inventory
 * Automatic dispense pills
+## Journey Map
+![[images/Journey Map.jpg]]
+
+## User Persona
