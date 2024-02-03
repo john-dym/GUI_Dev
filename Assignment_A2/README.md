@@ -13,6 +13,7 @@ Design Tools
 * Check Inventory
 * Automatic dispense pills
 ## Journey Map
-![[images/Journey Map.jpg]]
+![Journey Map](images/Journey_Map.jpg)
 
 ## User Persona
+![User Persona](images/User_Persona.png)
