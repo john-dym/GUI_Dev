@@ -10,6 +10,7 @@ from functools import partial
 def Reveal_French_Number(dict, dict_key, label_output):
     label_output.config(text=dict[dict_key], background='lightgreen')
 
+#Constants
 TITLE = "French Numbers"
 MAIN_TEXT = "Do you know the French words for the numbers 1 through 5?"
 INSTRUCTIONS = "Click the buttons below to see them."
@@ -22,6 +23,7 @@ FRENCH_NUMBERS = {1:"un",
 #Main window setup
 root = Tk()
 root.title(TITLE)
+root.configure()
 
 frm = ttk.Frame(root, padding=20)
 frm.grid()
