@@ -1,0 +1,12 @@
+PAGE
+    Toplevel: Burger Specials
+        Canvas: Canvas1  
+        Label: lblHeading  unlocked
+        Canvas: picPrime  
+        Button: btnVeggie  
+        Button: btnExit  
+        Button: btnSelectMeal  
+        Label: lblInstructions  
+        Button: btnPrime  
+        Label: lblConfirmation  
+
