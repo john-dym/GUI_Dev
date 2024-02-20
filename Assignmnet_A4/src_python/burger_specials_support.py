@@ -1,3 +1,7 @@
+#   Author: John Morales
+#   Project: Assignment A4
+#   Class: GUI Development
+
 #! /usr/bin/env python3
 #  -*- coding: utf-8 -*-
 #

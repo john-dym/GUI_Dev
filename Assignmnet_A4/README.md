@@ -1,9 +1,11 @@
-# Assignment A3 - Burger Specials
+# Assignment A4 - Burger Specials
 Author: John Morales
 
-## Design Tools
+![Burger Specials Gui](burger_specials_gui.png)
+
+## Tools
 * Python PAGE - https://page.sourceforge.net/
+* PyCharm Professional
 
 ## Issues
-* Trouble closing Page program. Had to force close with task manager.
-* Would sometimes get errors when clicking on the PAGE UI. Closing the error windows unresponsive.
+* No Issues
