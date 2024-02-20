@@ -117,6 +117,7 @@ class frmBurgers:
         self.btnSelectMeal.configure(highlightcolor="#000000")
         self.btnSelectMeal.configure(text='''Select Meal''')
         self.btnSelectMeal.configure(state=DISABLED)
+        self.btnSelectMeal.configure(command=self.select_button_click)
 
         self.lblInstructions = tk.Label(self.top)
         self.lblInstructions.place(relx=0.275, rely=0.673, height=19, width=360)
@@ -164,6 +165,7 @@ class frmBurgers:
         self.picPrime.image = _prime_photo
         self.picPrime.place(anchor='center',x=125, y=125)
         self.picVeggie.image = None
+        self.btnSelectMeal.configure(state='active')
 
     def veggie_button_click(self):
         _veggie_image = Image.open(_image_folder + "veggie.jpg")
@@ -173,6 +175,13 @@ class frmBurgers:
         self.picVeggie.image = _veggie_photo
         self.picVeggie.place(anchor='center', x=125, y=125)
         self.picPrime.image = None
+        self.btnSelectMeal.configure(state=ACTIVE)
+
+    def select_button_click(self):
+        self.btnPrime.configure(state=DISABLED)
+        self.btnSelectMeal.configure(state=DISABLED)
+        self.btnVeggie.configure(state=DISABLED)
+        self.lblConfirmation.configure(text=_confirmation)
 
 
 def start_up():
