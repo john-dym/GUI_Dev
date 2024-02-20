@@ -22,7 +22,14 @@ _tabfg1 = 'black'
 _tabfg2 = 'white' 
 _bgmode = 'light' 
 _tabbg1 = '#d9d9d9' 
-_tabbg2 = 'gray40' 
+_tabbg2 = 'gray40'
+_image_folder = "images/"
+
+
+#Constants
+_instructions = '''Choose a burger and then click the Select Meal button'''
+_confirmation = '''Enjoy your burger special'''
+
 
 class frmBurgers:
     def __init__(self, top=None):
@@ -40,17 +47,14 @@ class frmBurgers:
 
         self.top = top
 
-        self.Canvas1 = tk.Canvas(self.top)
-        self.Canvas1.place(relx=0.55, rely=0.102, relheight=0.424
-                , relwidth=0.325)
-        self.Canvas1.configure(background="#d9d9d9")
-        self.Canvas1.configure(borderwidth="2")
-        self.Canvas1.configure(highlightbackground="#d9d9d9")
-        self.Canvas1.configure(highlightcolor="#000000")
-        self.Canvas1.configure(insertbackground="#000000")
-        self.Canvas1.configure(relief="ridge")
-        self.Canvas1.configure(selectbackground="#d9d9d9")
-        self.Canvas1.configure(selectforeground="black")
+        self.picVeggie = tk.Label(self.top)
+        self.picVeggie.place(relx=0.55, rely=0.102, relheight=0.424
+                             , relwidth=0.325)
+        self.picVeggie.configure(background="#d9d9d9")
+        self.picVeggie.configure(borderwidth="2")
+        self.picVeggie.configure(highlightbackground="#d9d9d9")
+        self.picVeggie.configure(highlightcolor="#000000")
+        self.picVeggie.configure(relief="ridge")
 
         self.lblHeading = tk.Label(self.top)
         self.lblHeading.place(relx=0.275, rely=0.017, height=33, width=352)
@@ -65,17 +69,15 @@ class frmBurgers:
         self.lblHeading.configure(highlightcolor="#000000")
         self.lblHeading.configure(text='''Farm Burger Specials''')
 
-        self.picPrime = tk.Canvas(self.top)
+        #Canvas Ref: https://tkdocs.com/tutorial/canvas.html
+        self.picPrime = tk.Label(self.top)
         self.picPrime.place(relx=0.1, rely=0.102, relheight=0.424
                 , relwidth=0.325)
         self.picPrime.configure(background="#d9d9d9")
         self.picPrime.configure(borderwidth="2")
         self.picPrime.configure(highlightbackground="#d9d9d9")
         self.picPrime.configure(highlightcolor="#000000")
-        self.picPrime.configure(insertbackground="#000000")
         self.picPrime.configure(relief="ridge")
-        self.picPrime.configure(selectbackground="#d9d9d9")
-        self.picPrime.configure(selectforeground="black")
 
         self.btnVeggie = tk.Button(self.top)
         self.btnVeggie.place(relx=0.663, rely=0.576, height=35, width=128)
@@ -88,6 +90,7 @@ class frmBurgers:
         self.btnVeggie.configure(highlightbackground="#d9d9d9")
         self.btnVeggie.configure(highlightcolor="#000000")
         self.btnVeggie.configure(text='''Veggie''')
+        self.btnVeggie.configure(command=self.veggie_button_click)
 
         self.btnExit = tk.Button(self.top)
         self.btnExit.place(relx=0.425, rely=0.898, height=35, width=128)
@@ -113,6 +116,7 @@ class frmBurgers:
         self.btnSelectMeal.configure(highlightbackground="#d9d9d9")
         self.btnSelectMeal.configure(highlightcolor="#000000")
         self.btnSelectMeal.configure(text='''Select Meal''')
+        self.btnSelectMeal.configure(state=DISABLED)
 
         self.lblInstructions = tk.Label(self.top)
         self.lblInstructions.place(relx=0.275, rely=0.673, height=19, width=360)
@@ -124,7 +128,7 @@ class frmBurgers:
         self.lblInstructions.configure(foreground="#000000")
         self.lblInstructions.configure(highlightbackground="#d9d9d9")
         self.lblInstructions.configure(highlightcolor="#000000")
-        self.lblInstructions.configure(text='''Choose a burger and then click the Select Meal button''')
+        self.lblInstructions.configure(text=_instructions)
 
         self.btnPrime = tk.Button(self.top)
         self.btnPrime.place(relx=0.163, rely=0.576, height=35, width=128)
@@ -137,7 +141,7 @@ class frmBurgers:
         self.btnPrime.configure(highlightbackground="#d9d9d9")
         self.btnPrime.configure(highlightcolor="#000000")
         self.btnPrime.configure(text='''Prime Beef''')
-        # self.btnPrime.configure(command=)
+        self.btnPrime.configure(command=self.prime_beef_button_click)
 
         self.lblConfirmation = tk.Label(self.top)
         self.lblConfirmation.place(relx=0.393, rely=0.714, height=19, width=172)
@@ -150,7 +154,26 @@ class frmBurgers:
         self.lblConfirmation.configure(foreground="#000000")
         self.lblConfirmation.configure(highlightbackground="#d9d9d9")
         self.lblConfirmation.configure(highlightcolor="#000000")
-        self.lblConfirmation.configure(text='''Enjoy your burger special''')
+        self.lblConfirmation.configure(text=None)
+
+    def prime_beef_button_click(self):
+        _prime_image = Image.open(_image_folder + "prime.jpg")
+        _prime_photo = ImageTk.PhotoImage(_prime_image.resize((260, 250)))
+
+        self.picPrime.configure(image=_prime_photo)
+        self.picPrime.image = _prime_photo
+        self.picPrime.place(anchor='center',x=125, y=125)
+        self.picVeggie.image = None
+
+    def veggie_button_click(self):
+        _veggie_image = Image.open(_image_folder + "veggie.jpg")
+        _veggie_photo = ImageTk.PhotoImage(_veggie_image.resize((260,250)))
+
+        self.picVeggie.configure(image=_veggie_photo)
+        self.picVeggie.image = _veggie_photo
+        self.picVeggie.place(anchor='center', x=125, y=125)
+        self.picPrime.image = None
+
 
 def start_up():
     burger_specials_support.main()
