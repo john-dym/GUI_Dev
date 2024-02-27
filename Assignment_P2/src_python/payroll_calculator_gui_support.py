@@ -10,7 +10,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter.constants import *
 
-import payroll_calculator2
+import payroll_calculator_gui
 
 _debug = True # False to eliminate debug printing from callback functions.
 
@@ -22,11 +22,11 @@ def main(*args):
     # Creates a toplevel widget.
     global _top1, _w1
     _top1 = root
-    _w1 = payroll_calculator2.Toplevel1(_top1)
+    _w1 = payroll_calculator_gui.Toplevel1(_top1)
     root.mainloop()
 
 if __name__ == '__main__':
-    payroll_calculator2.start_up()
+    payroll_calculator_gui.start_up()
 
 
 

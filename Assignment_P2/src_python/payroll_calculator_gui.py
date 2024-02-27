@@ -10,10 +10,11 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter.constants import *
 import os.path
+from PIL import ImageTk, Image
 
 _location = os.path.dirname(__file__)
 
-import payroll_calculator2_support
+import payroll_calculator_gui_support
 
 _bgcolor = '#ffffff'
 _fgcolor = '#000000'
@@ -22,6 +23,7 @@ _tabfg2 = 'white'
 _bgmode = 'light' 
 _tabbg1 = '#d9d9d9' 
 _tabbg2 = 'gray40' 
+_image_folder = "images/"
 
 class Toplevel1:
     def __init__(self, top=None):
@@ -245,16 +247,17 @@ class Toplevel1:
         self.HeaderFrame.configure(highlightbackground="#d9d9d9")
         self.HeaderFrame.configure(highlightcolor="#000000")
 
-        self.Canvas1 = tk.Canvas(self.HeaderFrame)
-        self.Canvas1.place(relx=-0.012, rely=-0.036, relheight=1.065
-                , relwidth=0.513)
-        self.Canvas1.configure(background="#d9d9d9")
-        self.Canvas1.configure(borderwidth="2")
-        self.Canvas1.configure(highlightbackground="#d9d9d9")
-        self.Canvas1.configure(highlightcolor="#000000")
-        self.Canvas1.configure(insertbackground="#000000")
-        self.Canvas1.configure(selectbackground="#d9d9d9")
-        self.Canvas1.configure(selectforeground="black")
+        self.picPayroll = tk.Label(self.HeaderFrame)
+        self.picPayroll.place(relx=-0.012, rely=-0.036, relheight=1.065
+                              , relwidth=0.513)
+        self.picPayroll.configure(background="#d9d9d9")
+        self.picPayroll.configure(borderwidth="2")
+        self.picPayroll.configure(highlightbackground="#d9d9d9")
+        self.picPayroll.configure(highlightcolor="#000000")
+        with Image.open(_image_folder + "payroll.jpg") as payroll_image:
+            photo = ImageTk.PhotoImage(payroll_image.resize((413, 293)))
+            self.picPayroll.configure(image=photo)
+            self.picPayroll.image = photo
 
         self.ProgramTitle = tk.Label(self.HeaderFrame)
         self.ProgramTitle.place(relx=0.509, rely=0.109, height=51, width=393)
@@ -281,13 +284,13 @@ class Toplevel1:
         self.ProgramDescription.configure(foreground="#000000")
         self.ProgramDescription.configure(highlightbackground="#d9d9d9")
         self.ProgramDescription.configure(highlightcolor="#000000")
-        self.ProgramDescription.configure(text='''Paycheck Calculation''')
+        self.ProgramDescription.configure(text='''Paycheck\nCalculation''')
 
 def start_up():
-    payroll_calculator2_support.main()
+    payroll_calculator_gui_support.main()
 
 if __name__ == '__main__':
-    payroll_calculator2_support.main()
+    payroll_calculator_gui_support.main()
 
 
 
