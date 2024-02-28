@@ -1,3 +1,11 @@
+"""
+Created by: John Morales
+Class: GUI Development
+Assignment: Assignment P2
+
+Python Version: 3.12
+"""
+
 from decimal import Decimal
 
 _cdecFica = Decimal(0.0765)

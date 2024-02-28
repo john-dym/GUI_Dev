@@ -1,3 +1,10 @@
+"""
+Created by: John Morales
+Class: GUI Development
+Assignment: Assignment P2
+
+Python Version: 3.12
+"""
 #! /usr/bin/env python3
 #  -*- coding: utf-8 -*-
 #
