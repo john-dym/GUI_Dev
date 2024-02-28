@@ -7,10 +7,13 @@
 
 import sys
 import tkinter as tk
+from tkinter import messagebox
 import tkinter.ttk as ttk
 from tkinter.constants import *
 import os.path
 from PIL import ImageTk, Image
+import payroll_calculator
+from re import fullmatch
 
 _location = os.path.dirname(__file__)
 
@@ -24,6 +27,7 @@ _bgmode = 'light'
 _tabbg1 = '#d9d9d9' 
 _tabbg2 = 'gray40' 
 _image_folder = "images/"
+_money_re = "[0-9]*['.']?[0-9]*"
 
 class Toplevel1:
     def __init__(self, top=None):
@@ -46,27 +50,55 @@ class Toplevel1:
         self.lblStateTaxOut = tk.StringVar()
         self.GrossPayInput = tk.StringVar()
 
-        self.Frame1 = tk.Frame(self.top)
-        self.Frame1.place(relx=0.0, rely=0.452, relheight=0.565, relwidth=1.006)
-        self.Frame1.configure(relief='flat')
-        self.Frame1.configure(borderwidth="2")
-        self.Frame1.configure(background="#d9d9d9")
-        self.Frame1.configure(highlightbackground="#d9d9d9")
-        self.Frame1.configure(highlightcolor="#000000")
+        self.frmInputOutput = tk.Frame(self.top)
+        self.frmInputOutput.place(relx=0.0, rely=0.452, relheight=0.565, relwidth=1.006)
+        self.frmInputOutput.configure(relief='flat')
+        self.frmInputOutput.configure(borderwidth="2")
+        self.frmInputOutput.configure(background="#d9d9d9")
+        self.frmInputOutput.configure(highlightbackground="#d9d9d9")
+        self.frmInputOutput.configure(highlightcolor="#000000")
 
-        self.Button2 = tk.Button(self.Frame1)
-        self.Button2.place(relx=0.447, rely=0.338, height=36, width=130)
-        self.Button2.configure(activebackground="#d9d9d9")
-        self.Button2.configure(activeforeground="black")
-        self.Button2.configure(background="#0290fe")
-        self.Button2.configure(disabledforeground="#a3a3a3")
-        self.Button2.configure(font="-family {Segoe UI} -size 9 -weight bold")
-        self.Button2.configure(foreground="#ffffff")
-        self.Button2.configure(highlightbackground="#d9d9d9")
-        self.Button2.configure(highlightcolor="#000000")
-        self.Button2.configure(text='''Clear''')
+        #Buttons
+        self.btnClear = tk.Button(self.frmInputOutput)
+        self.btnClear.place(relx=0.447, rely=0.338, height=36, width=130)
+        self.btnClear.configure(activebackground="#d9d9d9")
+        self.btnClear.configure(activeforeground="black")
+        self.btnClear.configure(background="#0290fe")
+        self.btnClear.configure(disabledforeground="#a3a3a3")
+        self.btnClear.configure(font="-family {Segoe UI} -size 9 -weight bold")
+        self.btnClear.configure(foreground="#ffffff")
+        self.btnClear.configure(highlightbackground="#d9d9d9")
+        self.btnClear.configure(highlightcolor="#000000")
+        self.btnClear.configure(text='''Clear''')
+        self.btnClear.configure(command=self.ClearForm)
 
-        self.Label4 = tk.Label(self.Frame1)
+        self.btnComputeTaxes = tk.Button(self.frmInputOutput)
+        self.btnComputeTaxes.place(relx=0.186, rely=0.338, height=36, width=130)
+        self.btnComputeTaxes.configure(activebackground="#d9d9d9")
+        self.btnComputeTaxes.configure(activeforeground="black")
+        self.btnComputeTaxes.configure(background="#0290fe")
+        self.btnComputeTaxes.configure(disabledforeground="#a3a3a3")
+        self.btnComputeTaxes.configure(font="-family {Segoe UI} -size 9 -weight bold")
+        self.btnComputeTaxes.configure(foreground="#ffffff")
+        self.btnComputeTaxes.configure(highlightbackground="#d9d9d9")
+        self.btnComputeTaxes.configure(highlightcolor="#000000")
+        self.btnComputeTaxes.configure(text='''Compute Taxes''')
+        self.btnComputeTaxes.configure(command=self.Calculate)
+
+        self.btnExit = tk.Button(self.frmInputOutput)
+        self.btnExit.place(relx=0.683, rely=0.338, height=36, width=130)
+        self.btnExit.configure(activebackground="#d9d9d9")
+        self.btnExit.configure(activeforeground="black")
+        self.btnExit.configure(background="#0290fe")
+        self.btnExit.configure(disabledforeground="#a3a3a3")
+        self.btnExit.configure(font="-family {Segoe UI} -size 9 -weight bold")
+        self.btnExit.configure(foreground="#ffffff")
+        self.btnExit.configure(highlightbackground="#d9d9d9")
+        self.btnExit.configure(highlightcolor="#000000")
+        self.btnExit.configure(text='''Exit''')
+        self.btnExit.configure(command=quit)
+
+        self.Label4 = tk.Label(self.frmInputOutput)
         self.Label4.place(relx=0.671, rely=0.585, height=31, width=94)
         self.Label4.configure(activebackground="#d9d9d9")
         self.Label4.configure(activeforeground="black")
@@ -80,7 +112,7 @@ class Toplevel1:
         self.Label4.configure(highlightcolor="#000000")
         self.Label4.configure(text='''State Tax:''')
 
-        self.Label3 = tk.Label(self.Frame1)
+        self.Label3 = tk.Label(self.frmInputOutput)
         self.Label3.place(relx=0.385, rely=0.585, height=31, width=94)
         self.Label3.configure(activebackground="#d9d9d9")
         self.Label3.configure(activeforeground="black")
@@ -94,19 +126,7 @@ class Toplevel1:
         self.Label3.configure(highlightcolor="#000000")
         self.Label3.configure(text='''Federal Tax:''')
 
-        self.Button1 = tk.Button(self.Frame1)
-        self.Button1.place(relx=0.186, rely=0.338, height=36, width=130)
-        self.Button1.configure(activebackground="#d9d9d9")
-        self.Button1.configure(activeforeground="black")
-        self.Button1.configure(background="#0290fe")
-        self.Button1.configure(disabledforeground="#a3a3a3")
-        self.Button1.configure(font="-family {Segoe UI} -size 9 -weight bold")
-        self.Button1.configure(foreground="#ffffff")
-        self.Button1.configure(highlightbackground="#d9d9d9")
-        self.Button1.configure(highlightcolor="#000000")
-        self.Button1.configure(text='''Compute Taxes''')
-
-        self.Label5 = tk.Label(self.Frame1)
+        self.Label5 = tk.Label(self.frmInputOutput)
         self.Label5.place(relx=0.211, rely=0.738, height=41, width=234)
         self.Label5.configure(activebackground="#d9d9d9")
         self.Label5.configure(activeforeground="black")
@@ -120,7 +140,7 @@ class Toplevel1:
         self.Label5.configure(highlightcolor="#000000")
         self.Label5.configure(text='''Net Paycheck Income:''')
 
-        self.Label2 = tk.Label(self.Frame1)
+        self.Label2 = tk.Label(self.frmInputOutput)
         self.Label2.place(relx=0.199, rely=0.585, height=31, width=45)
         self.Label2.configure(activebackground="#d9d9d9")
         self.Label2.configure(activeforeground="black")
@@ -134,7 +154,7 @@ class Toplevel1:
         self.Label2.configure(highlightcolor="#000000")
         self.Label2.configure(text='''FICA:''')
 
-        self.Label7 = tk.Label(self.Frame1)
+        self.Label7 = tk.Label(self.frmInputOutput)
         self.Label7.place(relx=0.286, rely=0.585, height=31, width=65)
         self.Label7.configure(activebackground="#d9d9d9")
         self.Label7.configure(activeforeground="black")
@@ -146,11 +166,9 @@ class Toplevel1:
         self.Label7.configure(foreground="#000000")
         self.Label7.configure(highlightbackground="#d9d9d9")
         self.Label7.configure(highlightcolor="#000000")
-        self.Label7.configure(text='''Label''')
         self.Label7.configure(textvariable=self.lblFICAOut)
-        self.lblFICAOut.set('''Label''')
 
-        self.Label8 = tk.Label(self.Frame1)
+        self.Label8 = tk.Label(self.frmInputOutput)
         self.Label8.place(relx=0.534, rely=0.585, height=31, width=84)
         self.Label8.configure(activebackground="#d9d9d9")
         self.Label8.configure(activeforeground="black")
@@ -162,11 +180,9 @@ class Toplevel1:
         self.Label8.configure(foreground="#000000")
         self.Label8.configure(highlightbackground="#d9d9d9")
         self.Label8.configure(highlightcolor="#000000")
-        self.Label8.configure(text='''Label''')
         self.Label8.configure(textvariable=self.lblFederalTaxOut)
-        self.lblFederalTaxOut.set('''Label''')
 
-        self.Label6 = tk.Label(self.Frame1)
+        self.Label6 = tk.Label(self.frmInputOutput)
         self.Label6.place(relx=0.547, rely=0.738, height=41, width=174)
         self.Label6.configure(activebackground="#d9d9d9")
         self.Label6.configure(activeforeground="black")
@@ -178,11 +194,9 @@ class Toplevel1:
         self.Label6.configure(foreground="#000000")
         self.Label6.configure(highlightbackground="#d9d9d9")
         self.Label6.configure(highlightcolor="#000000")
-        self.Label6.configure(text='''Label''')
         self.Label6.configure(textvariable=self.lblNetIncomeOut)
-        self.lblNetIncomeOut.set('''Label''')
 
-        self.Label1 = tk.Label(self.Frame1)
+        self.Label1 = tk.Label(self.frmInputOutput)
         self.Label1.place(relx=0.236, rely=0.123, height=41, width=232)
         self.Label1.configure(activebackground="#d9d9d9")
         self.Label1.configure(activeforeground="black")
@@ -196,19 +210,7 @@ class Toplevel1:
         self.Label1.configure(highlightcolor="#000000")
         self.Label1.configure(text='''Enter Gross Pay:''')
 
-        self.Button3 = tk.Button(self.Frame1)
-        self.Button3.place(relx=0.683, rely=0.338, height=36, width=130)
-        self.Button3.configure(activebackground="#d9d9d9")
-        self.Button3.configure(activeforeground="black")
-        self.Button3.configure(background="#0290fe")
-        self.Button3.configure(disabledforeground="#a3a3a3")
-        self.Button3.configure(font="-family {Segoe UI} -size 9 -weight bold")
-        self.Button3.configure(foreground="#ffffff")
-        self.Button3.configure(highlightbackground="#d9d9d9")
-        self.Button3.configure(highlightcolor="#000000")
-        self.Button3.configure(text='''Exit''')
-
-        self.Label9 = tk.Label(self.Frame1)
+        self.Label9 = tk.Label(self.frmInputOutput)
         self.Label9.place(relx=0.795, rely=0.585, height=31, width=94)
         self.Label9.configure(activebackground="#d9d9d9")
         self.Label9.configure(activeforeground="black")
@@ -220,13 +222,10 @@ class Toplevel1:
         self.Label9.configure(foreground="#000000")
         self.Label9.configure(highlightbackground="#d9d9d9")
         self.Label9.configure(highlightcolor="#000000")
-        self.Label9.configure(text='''Label''')
         self.Label9.configure(textvariable=self.lblStateTaxOut)
-        self.lblStateTaxOut.set('''Label''')
 
-        self.EntryGrossPay = tk.Entry(self.Frame1)
-        self.EntryGrossPay.place(relx=0.534, rely=0.123, height=40
-                , relwidth=0.216)
+        self.EntryGrossPay = tk.Entry(self.frmInputOutput)
+        self.EntryGrossPay.place(relx=0.534, rely=0.123, height=40, relwidth=0.216)
         self.EntryGrossPay.configure(background="white")
         self.EntryGrossPay.configure(disabledforeground="#a3a3a3")
         self.EntryGrossPay.configure(font="-family {Arial} -size 14")
@@ -248,8 +247,7 @@ class Toplevel1:
         self.HeaderFrame.configure(highlightcolor="#000000")
 
         self.picPayroll = tk.Label(self.HeaderFrame)
-        self.picPayroll.place(relx=-0.012, rely=-0.036, relheight=1.065
-                              , relwidth=0.513)
+        self.picPayroll.place(relx=-0.012, rely=-0.036, relheight=1.065, relwidth=0.513)
         self.picPayroll.configure(background="#d9d9d9")
         self.picPayroll.configure(borderwidth="2")
         self.picPayroll.configure(highlightbackground="#d9d9d9")
@@ -285,6 +283,39 @@ class Toplevel1:
         self.ProgramDescription.configure(highlightbackground="#d9d9d9")
         self.ProgramDescription.configure(highlightcolor="#000000")
         self.ProgramDescription.configure(text='''Paycheck\nCalculation''')
+
+    def Calculate(self):
+        user_input = self.ValidateInput()
+        if user_input != "":
+            results = payroll_calculator.calculate_net_income(user_input)
+            self.lblStateTaxOut.set(results[0])
+            self.lblFICAOut.set(results[1])
+            self.lblFederalTaxOut.set(results[2])
+            self.lblNetIncomeOut.set(results[3])
+
+    def ClearCalculatedData(self):
+        self.lblStateTaxOut.set("")
+        self.lblFICAOut.set("")
+        self.lblFederalTaxOut.set("")
+        self.lblNetIncomeOut.set("")
+
+    def ClearForm(self):
+        self.GrossPayInput.set("")
+        self.ClearCalculatedData()
+        # self.EntryGrossPay.focus
+
+    def ValidateInput(self):
+        re_check = fullmatch(_money_re, self.GrossPayInput.get())
+        if re_check:
+            return re_check.string
+        else:
+            self.InvalidInput()
+            return ""
+
+    def InvalidInput(self):
+        messagebox.showerror("Error", "")
+        self.ClearForm()
+
 
 def start_up():
     payroll_calculator_gui_support.main()
