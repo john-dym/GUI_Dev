@@ -313,7 +313,7 @@ class Toplevel1:
             return ""
 
     def InvalidInput(self):
-        messagebox.showerror("Error", "")
+        messagebox.showerror("Error", "Gross pay is not in the correct format. Only accepts a decimal number. i.e. 1000.00")
         self.ClearForm()
 
 
