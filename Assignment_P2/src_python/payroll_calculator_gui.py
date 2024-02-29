@@ -162,7 +162,7 @@ class Toplevel1:
         self.Label2.configure(text='''FICA:''')
 
         self.Label7 = tk.Label(self.frmInputOutput)
-        self.Label7.place(relx=0.286, rely=0.585, height=31, width=65)
+        self.Label7.place(relx=0.276, rely=0.585, height=31, width=75)
         self.Label7.configure(activebackground="#d9d9d9")
         self.Label7.configure(activeforeground="black")
         self.Label7.configure(anchor='w')
@@ -243,6 +243,9 @@ class Toplevel1:
         self.EntryGrossPay.configure(selectbackground="#d9d9d9")
         self.EntryGrossPay.configure(selectforeground="black")
         self.EntryGrossPay.configure(textvariable=self.GrossPayInput)
+        self.EntryGrossPay.focus_set()
+        #https://stackoverflow.com/questions/73696611/cannot-bind-function-in-tkinter-gives-error-takes-1-positional-argument-but-2
+        self.EntryGrossPay.bind("<Return>", lambda e:self.Calculate())
 
         self.HeaderFrame = tk.Frame(self.top)
         self.HeaderFrame.place(relx=0.0, rely=-0.017, relheight=0.478
@@ -295,10 +298,10 @@ class Toplevel1:
         user_input = self.ValidateInput()
         if user_input != "":
             results = payroll_calculator.calculate_net_income(user_input)
-            self.lblStateTaxOut.set(results[0])
-            self.lblFICAOut.set(results[1])
-            self.lblFederalTaxOut.set(results[2])
-            self.lblNetIncomeOut.set(results[3])
+            self.lblStateTaxOut.set("$" + results[0].to_eng_string())
+            self.lblFICAOut.set("$" + results[1].to_eng_string())
+            self.lblFederalTaxOut.set("$" + results[2].to_eng_string())
+            self.lblNetIncomeOut.set("$" + results[3].to_eng_string())
 
     def ClearCalculatedData(self):
         self.lblStateTaxOut.set("")
@@ -309,7 +312,6 @@ class Toplevel1:
     def ClearForm(self):
         self.GrossPayInput.set("")
         self.ClearCalculatedData()
-        # self.EntryGrossPay.focus
 
     def ValidateInput(self):
         re_check = fullmatch(_money_re, self.GrossPayInput.get())
@@ -322,6 +324,7 @@ class Toplevel1:
     def InvalidInput(self):
         messagebox.showerror("Error", "Gross pay is not in the correct format. Only accepts a decimal number. i.e. 1000.00")
         self.ClearForm()
+
 
 
 def start_up():
