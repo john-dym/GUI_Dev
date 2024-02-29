@@ -1,7 +1,8 @@
-# Assignment A4 - Burger Specials
+# Assignment P2 - Payroll Calculator
 Author: John Morales
 
-![Burger Specials Gui](burger_specials_gui.png)
+![Main Payroll Gui](screenshot_01.png)
+![Error Message](screenshot_02.png)
 
 ## Tools
 * Python PAGE - https://page.sourceforge.net/
