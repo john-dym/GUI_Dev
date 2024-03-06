@@ -42,7 +42,7 @@ class Toplevel1:
         self.top = top
         self.GroupSizeInput = tk.StringVar()
         self.CostOutput = tk.StringVar()
-        self.selectedBadge = tk.IntVar(value=0)
+        self.selectedBadge = tk.IntVar(value=1)
 
         self.Label2 = tk.Label(self.top)
         self.Label2.place(relx=0.25, rely=0.371, height=81, width=171)
@@ -224,7 +224,7 @@ class Toplevel1:
 
     def clear(self):
         #Clears the user input and outputs
-        self.selectedBadge.set(0)
+        self.selectedBadge.set(1)
         self.CostOutput.set("")
         self.GroupSizeInput.set("")
 
