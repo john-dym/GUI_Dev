@@ -42,7 +42,7 @@ class Toplevel1:
         self.top = top
         self.GroupSizeInput = tk.StringVar()
         self.CostOutput = tk.StringVar()
-        self.selectedBadge = tk.IntVar(value=0)
+        self.selectedBadge = tk.IntVar(value=1)
 
         self.Label2 = tk.Label(self.top)
         self.Label2.place(relx=0.25, rely=0.371, height=81, width=171)
@@ -206,6 +206,7 @@ class Toplevel1:
         self.EntryGroupSize.configure(selectbackground="#d9d9d9")
         self.EntryGroupSize.configure(selectforeground="black")
         self.EntryGroupSize.configure(textvariable=self.GroupSizeInput)
+        self.EntryGroupSize.focus_set()
 
         self.LblCost = tk.Label(self.top)
         self.LblCost.place(relx=0.583, rely=0.8, height=41, width=194)
@@ -224,9 +225,10 @@ class Toplevel1:
 
     def clear(self):
         #Clears the user input and outputs
-        self.selectedBadge.set(0)
+        self.selectedBadge.set(1)
         self.CostOutput.set("")
         self.GroupSizeInput.set("")
+        self.EntryGroupSize.focus_set()
 
 def start_up():
     comic_con_registration_support.main()
