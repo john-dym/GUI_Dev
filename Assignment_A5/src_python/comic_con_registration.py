@@ -162,8 +162,7 @@ class Toplevel1:
         self.Button2.configure(activebackground="#d9d9d9")
         self.Button2.configure(activeforeground="black")
         self.Button2.configure(background="#6bcdea")
-        self.Button2.configure(command=comic_con_registration_support.def bClear():
-    pass)
+        self.Button2.configure(command=comic_con_registration_support.bClear)
         self.Button2.configure(disabledforeground="#a3a3a3")
         self.Button2.configure(font="-family {Comic Sans MS} -size 20 -weight bold")
         self.Button2.configure(foreground="#000000")

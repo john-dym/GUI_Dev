@@ -25,7 +25,7 @@ def main(*args):
     _w1 = comic_con_registration.Toplevel1(_top1)
     root.mainloop()
 
-def def bClear(*args):
+def bClear(*args):
     if _debug:
         print('comic_con_registration_support.def bClear')
         for arg in args:
