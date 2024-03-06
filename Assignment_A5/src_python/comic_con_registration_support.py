@@ -25,13 +25,6 @@ def main(*args):
     _w1 = comic_con_registration.Toplevel1(_top1)
     root.mainloop()
 
-def bClear(*args):
-    if _debug:
-        print('comic_con_registration_support.def bClear')
-        for arg in args:
-            print ('    another arg:', arg)
-        sys.stdout.flush()
-
 if __name__ == '__main__':
     comic_con_registration.start_up()
 

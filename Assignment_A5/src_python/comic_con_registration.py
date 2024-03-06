@@ -42,7 +42,7 @@ class Toplevel1:
         self.top = top
         self.GroupSizeInput = tk.StringVar()
         self.CostOutput = tk.StringVar()
-        self.selectedBadge = tk.IntVar()
+        self.selectedBadge = tk.IntVar(value=0)
 
         self.Label2 = tk.Label(self.top)
         self.Label2.place(relx=0.25, rely=0.371, height=81, width=171)
@@ -124,6 +124,7 @@ class Toplevel1:
         self.Radiobutton3.configure(justify='left')
         self.Radiobutton3.configure(text='''Convention''')
         self.Radiobutton3.configure(variable=self.selectedBadge)
+        self.Radiobutton3.configure(value=3)
 
         self.Radiobutton2 = tk.Radiobutton(self.Labelframe1)
         self.Radiobutton2.place(relx=0.083, rely=0.43, relheight=0.242
@@ -141,6 +142,7 @@ class Toplevel1:
         self.Radiobutton2.configure(justify='left')
         self.Radiobutton2.configure(text='''Convention + Autographs''')
         self.Radiobutton2.configure(variable=self.selectedBadge)
+        self.Radiobutton2.configure(value=2)
 
         self.Radiobutton1 = tk.Radiobutton(self.Labelframe1)
         self.Radiobutton1.place(relx=0.083, rely=0.177, relheight=0.242
@@ -158,13 +160,14 @@ class Toplevel1:
         self.Radiobutton1.configure(justify='left')
         self.Radiobutton1.configure(text='''Convention + Superhero Experience''')
         self.Radiobutton1.configure(variable=self.selectedBadge)
+        self.Radiobutton1.configure(value=1)
 
         self.btnClear = tk.Button(self.top)
         self.btnClear.place(relx=0.583, rely=0.914, height=46, width=167)
         self.btnClear.configure(activebackground="#d9d9d9")
         self.btnClear.configure(activeforeground="black")
         self.btnClear.configure(background="#6bcdea")
-        self.btnClear.configure(command=comic_con_registration_support.bClear)
+        self.btnClear.configure(command=self.clear)
         self.btnClear.configure(disabledforeground="#a3a3a3")
         self.btnClear.configure(font="-family {Comic Sans MS} -size 20 -weight bold")
         self.btnClear.configure(foreground="#000000")
@@ -189,7 +192,6 @@ class Toplevel1:
             photo = ImageTk.PhotoImage(comic_image.resize(HeaderFrame_size))
             self.picComic.configure(image=photo)
             self.picComic.image = photo
-
 
         self.EntryGroupSize = tk.Entry(self.top)
         self.EntryGroupSize.place(relx=0.617, rely=0.4, height=50, relwidth=0.14)
@@ -219,6 +221,12 @@ class Toplevel1:
         self.LblCost.configure(highlightcolor="#000000")
         self.LblCost.configure(textvariable=self.CostOutput)
         self.CostOutput.set('''''')
+
+    def clear(self):
+        #Clears the user input and outputs
+        self.selectedBadge.set(0)
+        self.CostOutput.set("")
+        self.GroupSizeInput.set("")
 
 def start_up():
     comic_con_registration_support.main()
