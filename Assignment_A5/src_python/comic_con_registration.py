@@ -10,6 +10,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter.constants import *
 import os.path
+from PIL import ImageTk, Image
 
 _location = os.path.dirname(__file__)
 
@@ -21,7 +22,8 @@ _tabfg1 = 'black'
 _tabfg2 = 'white' 
 _bgmode = 'light' 
 _tabbg1 = '#d9d9d9' 
-_tabbg2 = 'gray40' 
+_tabbg2 = 'gray40'
+_image_folder = "images/"
 
 class Toplevel1:
     def __init__(self, top=None):
@@ -157,19 +159,19 @@ class Toplevel1:
         self.Radiobutton1.configure(text='''Convention + Superhero Experience''')
         self.Radiobutton1.configure(variable=self.selectedBadge)
 
-        self.Button2 = tk.Button(self.top)
-        self.Button2.place(relx=0.583, rely=0.914, height=46, width=167)
-        self.Button2.configure(activebackground="#d9d9d9")
-        self.Button2.configure(activeforeground="black")
-        self.Button2.configure(background="#6bcdea")
-        self.Button2.configure(command=comic_con_registration_support.bClear)
-        self.Button2.configure(disabledforeground="#a3a3a3")
-        self.Button2.configure(font="-family {Comic Sans MS} -size 20 -weight bold")
-        self.Button2.configure(foreground="#000000")
-        self.Button2.configure(highlightbackground="#d9d9d9")
-        self.Button2.configure(highlightcolor="#000000")
-        self.Button2.configure(relief="ridge")
-        self.Button2.configure(text='''Clear''')
+        self.btnClear = tk.Button(self.top)
+        self.btnClear.place(relx=0.583, rely=0.914, height=46, width=167)
+        self.btnClear.configure(activebackground="#d9d9d9")
+        self.btnClear.configure(activeforeground="black")
+        self.btnClear.configure(background="#6bcdea")
+        self.btnClear.configure(command=comic_con_registration_support.bClear)
+        self.btnClear.configure(disabledforeground="#a3a3a3")
+        self.btnClear.configure(font="-family {Comic Sans MS} -size 20 -weight bold")
+        self.btnClear.configure(foreground="#000000")
+        self.btnClear.configure(highlightbackground="#d9d9d9")
+        self.btnClear.configure(highlightcolor="#000000")
+        self.btnClear.configure(relief="ridge")
+        self.btnClear.configure(text='''Clear''')
 
         self.HeaderFrame = tk.Frame(self.top)
         self.HeaderFrame.place(relx=0.0, rely=0.0, relheight=0.294
@@ -179,6 +181,15 @@ class Toplevel1:
         self.HeaderFrame.configure(background="#d9d9d9")
         self.HeaderFrame.configure(highlightbackground="#d9d9d9")
         self.HeaderFrame.configure(highlightcolor="#000000")
+
+        self.picComic = tk.Label(self.HeaderFrame)
+        self.picComic.place(relx=0, rely=0, relheight=1.0, relwidth=1)
+        with Image.open(_image_folder + "comic.jpg") as comic_image:
+            HeaderFrame_size = (605, 206)
+            photo = ImageTk.PhotoImage(comic_image.resize(HeaderFrame_size))
+            self.picComic.configure(image=photo)
+            self.picComic.image = photo
+
 
         self.EntryGroupSize = tk.Entry(self.top)
         self.EntryGroupSize.place(relx=0.617, rely=0.4, height=50, relwidth=0.14)
