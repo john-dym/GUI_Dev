@@ -1,7 +1,8 @@
 # Assignment A5 - Comic Convention Registration
 Author: John Morales
 
-![Comic Convention Registration](burger_specials_gui.png)
+![Comic Convention Registration](main_gui.png)
+![Error Example](gui_error.png)
 
 ## Tools
 * Python PAGE - https://page.sourceforge.net/
