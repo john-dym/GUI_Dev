@@ -9,8 +9,10 @@ import sys
 import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter.constants import *
+from tkinter import messagebox
 import os.path
 from PIL import ImageTk, Image
+from re import fullmatch
 
 _location = os.path.dirname(__file__)
 
@@ -24,6 +26,7 @@ _bgmode = 'light'
 _tabbg1 = '#d9d9d9' 
 _tabbg2 = 'gray40'
 _image_folder = "images/"
+_integer_re = "[0-9]*"
 
 class Toplevel1:
     def __init__(self, top=None):
@@ -42,7 +45,8 @@ class Toplevel1:
         self.top = top
         self.GroupSizeInput = tk.StringVar()
         self.CostOutput = tk.StringVar()
-        self.selectedBadge = tk.IntVar(value=1)
+        self.SelectedBadge = tk.IntVar(value=1)
+        self.BadgeCosts = {1:380.00, 2:275.00, 3:209.00}
 
         self.lblGroupSize = tk.Label(self.top)
         self.lblGroupSize.place(relx=0.25, rely=0.371, height=81, width=171)
@@ -57,18 +61,6 @@ class Toplevel1:
         self.lblGroupSize.configure(highlightbackground="#d9d9d9")
         self.lblGroupSize.configure(highlightcolor="#000000")
         self.lblGroupSize.configure(text='''Group Size:''')
-
-        self.btnCalculate = tk.Button(self.top)
-        self.btnCalculate.place(relx=0.15, rely=0.914, height=46, width=167)
-        self.btnCalculate.configure(activebackground="#d9d9d9")
-        self.btnCalculate.configure(activeforeground="black")
-        self.btnCalculate.configure(background="#6bcdea")
-        self.btnCalculate.configure(disabledforeground="#a3a3a3")
-        self.btnCalculate.configure(font="-family {Comic Sans MS} -size 20 -weight bold")
-        self.btnCalculate.configure(foreground="#000000")
-        self.btnCalculate.configure(highlightbackground="#d9d9d9")
-        self.btnCalculate.configure(highlightcolor="#000000")
-        self.btnCalculate.configure(text='''Calculate''')
 
         self.lblCost = tk.Label(self.top)
         self.lblCost.place(relx=0.133, rely=0.8, height=41, width=274)
@@ -107,23 +99,23 @@ class Toplevel1:
         self.frameSelection.configure(highlightbackground="#d9d9d9")
         self.frameSelection.configure(highlightcolor="#000000")
 
-        self.Radiobutton3 = tk.Radiobutton(self.frameSelection)
-        self.Radiobutton3.place(relx=0.083, rely=0.683, relheight=0.242
+        self.Radiobutton1 = tk.Radiobutton(self.frameSelection)
+        self.Radiobutton1.place(relx=0.083, rely=0.177, relheight=0.242
                 , relwidth=0.875, bordermode='ignore')
-        self.Radiobutton3.configure(activebackground="#d9d9d9")
-        self.Radiobutton3.configure(activeforeground="black")
-        self.Radiobutton3.configure(anchor='w')
-        self.Radiobutton3.configure(background="#6bcdea")
-        self.Radiobutton3.configure(compound='left')
-        self.Radiobutton3.configure(disabledforeground="#a3a3a3")
-        self.Radiobutton3.configure(font="-family {Comic Sans MS} -size 16 -weight bold")
-        self.Radiobutton3.configure(foreground="#e4562a")
-        self.Radiobutton3.configure(highlightbackground="#d9d9d9")
-        self.Radiobutton3.configure(highlightcolor="#000000")
-        self.Radiobutton3.configure(justify='left')
-        self.Radiobutton3.configure(text='''Convention''')
-        self.Radiobutton3.configure(variable=self.selectedBadge)
-        self.Radiobutton3.configure(value=3)
+        self.Radiobutton1.configure(activebackground="#6bcdea")
+        self.Radiobutton1.configure(activeforeground="black")
+        self.Radiobutton1.configure(anchor='w')
+        self.Radiobutton1.configure(background="#6bcdea")
+        self.Radiobutton1.configure(compound='left')
+        self.Radiobutton1.configure(disabledforeground="#a3a3a3")
+        self.Radiobutton1.configure(font="-family {Comic Sans MS} -size 16 -weight bold")
+        self.Radiobutton1.configure(foreground="#e4562a")
+        self.Radiobutton1.configure(highlightbackground="#d9d9d9")
+        self.Radiobutton1.configure(highlightcolor="#000000")
+        self.Radiobutton1.configure(justify='left')
+        self.Radiobutton1.configure(text='''Convention + Superhero Experience''')
+        self.Radiobutton1.configure(variable=self.SelectedBadge)
+        self.Radiobutton1.configure(value=1)
 
         self.Radiobutton2 = tk.Radiobutton(self.frameSelection)
         self.Radiobutton2.place(relx=0.083, rely=0.43, relheight=0.242
@@ -140,26 +132,39 @@ class Toplevel1:
         self.Radiobutton2.configure(highlightcolor="#000000")
         self.Radiobutton2.configure(justify='left')
         self.Radiobutton2.configure(text='''Convention + Autographs''')
-        self.Radiobutton2.configure(variable=self.selectedBadge)
+        self.Radiobutton2.configure(variable=self.SelectedBadge)
         self.Radiobutton2.configure(value=2)
 
-        self.Radiobutton1 = tk.Radiobutton(self.frameSelection)
-        self.Radiobutton1.place(relx=0.083, rely=0.177, relheight=0.242
+        self.Radiobutton3 = tk.Radiobutton(self.frameSelection)
+        self.Radiobutton3.place(relx=0.083, rely=0.683, relheight=0.242
                 , relwidth=0.875, bordermode='ignore')
-        self.Radiobutton1.configure(activebackground="#6bcdea")
-        self.Radiobutton1.configure(activeforeground="black")
-        self.Radiobutton1.configure(anchor='w')
-        self.Radiobutton1.configure(background="#6bcdea")
-        self.Radiobutton1.configure(compound='left')
-        self.Radiobutton1.configure(disabledforeground="#a3a3a3")
-        self.Radiobutton1.configure(font="-family {Comic Sans MS} -size 16 -weight bold")
-        self.Radiobutton1.configure(foreground="#e4562a")
-        self.Radiobutton1.configure(highlightbackground="#d9d9d9")
-        self.Radiobutton1.configure(highlightcolor="#000000")
-        self.Radiobutton1.configure(justify='left')
-        self.Radiobutton1.configure(text='''Convention + Superhero Experience''')
-        self.Radiobutton1.configure(variable=self.selectedBadge)
-        self.Radiobutton1.configure(value=1)
+        self.Radiobutton3.configure(activebackground="#d9d9d9")
+        self.Radiobutton3.configure(activeforeground="black")
+        self.Radiobutton3.configure(anchor='w')
+        self.Radiobutton3.configure(background="#6bcdea")
+        self.Radiobutton3.configure(compound='left')
+        self.Radiobutton3.configure(disabledforeground="#a3a3a3")
+        self.Radiobutton3.configure(font="-family {Comic Sans MS} -size 16 -weight bold")
+        self.Radiobutton3.configure(foreground="#e4562a")
+        self.Radiobutton3.configure(highlightbackground="#d9d9d9")
+        self.Radiobutton3.configure(highlightcolor="#000000")
+        self.Radiobutton3.configure(justify='left')
+        self.Radiobutton3.configure(text='''Convention''')
+        self.Radiobutton3.configure(variable=self.SelectedBadge)
+        self.Radiobutton3.configure(value=3)
+
+        self.btnCalculate = tk.Button(self.top)
+        self.btnCalculate.place(relx=0.15, rely=0.914, height=46, width=167)
+        self.btnCalculate.configure(activebackground="#d9d9d9")
+        self.btnCalculate.configure(activeforeground="black")
+        self.btnCalculate.configure(background="#6bcdea")
+        self.btnCalculate.configure(disabledforeground="#a3a3a3")
+        self.btnCalculate.configure(font="-family {Comic Sans MS} -size 20 -weight bold")
+        self.btnCalculate.configure(foreground="#000000")
+        self.btnCalculate.configure(highlightbackground="#d9d9d9")
+        self.btnCalculate.configure(highlightcolor="#000000")
+        self.btnCalculate.configure(text='''Calculate''')
+        self.btnCalculate.configure(command=self.calculate)
 
         self.btnClear = tk.Button(self.top)
         self.btnClear.place(relx=0.583, rely=0.914, height=46, width=167)
@@ -223,13 +228,37 @@ class Toplevel1:
 
     def clear(self):
         #Clears the user input and outputs
-        self.selectedBadge.set(1)
+        self.SelectedBadge.set(1)
         self.CostOutput.set("")
         self.GroupSizeInput.set("")
         self.EntryGroupSize.focus_set()
 
     def calculate(self):
-        pass
+        group_size = self.ValidateGroupSize()
+
+        if group_size == 0: return #Exit because of failed input
+
+        badge_price = self.BadgeCosts[self.SelectedBadge.get()]
+        total_price = badge_price * group_size
+        cost_str = f'${total_price:.2f}'
+        self.CostOutput.set(cost_str)
+
+    def ValidateGroupSize(self):
+        MAX_GROUP_SIZE = 20
+        re_check = fullmatch(_integer_re, self.EntryGroupSize.get())
+        if re_check:
+            group_size = int(re_check.string)
+            if group_size >= 1 and group_size <= MAX_GROUP_SIZE:
+                return group_size
+
+        #If input is incorrect
+        self.InvalidInput()
+        return 0
+
+    def InvalidInput(self):
+        messagebox.showerror("Error", "Group size must be a whole number between 1 and 20")
+        self.clear()
+
 
 def start_up():
     comic_con_registration_support.main()
