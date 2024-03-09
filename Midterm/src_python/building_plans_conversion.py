@@ -24,6 +24,7 @@ _bgmode = 'light'
 _tabbg1 = '#d9d9d9' 
 _tabbg2 = 'gray40'
 _default_win_size = "800x600"
+_building_image_path = "images/building.png"
 
 class frmBuildingPlansConversion:
     def __init__(self, top=None):
@@ -154,7 +155,7 @@ class frmBuildingPlansConversion:
         self.lblTitle.configure(text='''Converter App''')
 
         self.lblInstructions = tk.Label(self.HeaderFrame)
-        self.lblInstructions.place(relx=0.4, rely=0.39, height=91, width=236)
+        self.lblInstructions.place(relx=0.4, rely=0.45, height=91, width=246)
         self.lblInstructions.configure(activebackground="#d9d9d9")
         self.lblInstructions.configure(activeforeground="black")
         self.lblInstructions.configure(anchor='nw')
@@ -165,7 +166,7 @@ class frmBuildingPlansConversion:
         self.lblInstructions.configure(foreground="#000000")
         self.lblInstructions.configure(highlightbackground="#d9d9d9")
         self.lblInstructions.configure(highlightcolor="#000000")
-        self.lblInstructions.configure(text='''Enter a value and choose conversion''')
+        self.lblInstructions.configure(text='''Enter a value and \nchoose conversion''')
 
         self.Entry1 = tk.Entry(self.HeaderFrame)
         self.Entry1.place(relx=0.775, rely=0.537, height=50, relwidth=0.168)
@@ -191,7 +192,9 @@ class frmBuildingPlansConversion:
         self.lblPic.configure(foreground="#000000")
         self.lblPic.configure(highlightbackground="#d9d9d9")
         self.lblPic.configure(highlightcolor="#000000")
-        self.lblPic.configure(text='''building.jpg''')
+        gui_tools.image_to_label(_building_image_path, self.lblPic, (205,264))
+
+
 
 def start_up():
     building_plans_conversion_support.main()
