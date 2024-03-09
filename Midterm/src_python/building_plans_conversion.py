@@ -30,8 +30,10 @@ class frmBuildingPlansConversion:
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
 
-        # top.geometry("800x600+632+324")
-        top.geometry(gui_tools.windows_geometry_pos(_default_win_size))
+        app_size_pos = gui_tools.windows_geometry(top, _default_win_size)
+
+        top.geometry(app_size_pos)
+        # top.geometry(gui_tools.windows_geometry_pos(_default_win_size))
         top.minsize(120, 1)
         top.maxsize(2052, 1261)
         top.resizable(1,  1)
