@@ -41,11 +41,11 @@ def image_to_label(image_path, label_widget, label_size):
     label_widget.image = photo
 
 def validate_int_input(input_str):
-    re_string = "-?[0-9]*"
+    re_string = "-?[0-9]+"
     return re_match(re_string, input_str)
 
 def validate_float_input(input_str):
-    re_string = "-?[0-9]*\\.?[0-9]*"
+    re_string = "-?[0-9]+\\.?[0-9]*"
     return re_match(re_string, input_str)
 
 def validate_positive_float_input(input_str):
@@ -53,6 +53,8 @@ def validate_positive_float_input(input_str):
     return re_match(re_string, input_str)
 
 def re_match(re_string, input_str):
+    if input_str.isspace() or len(input_str) == 0: return False
+
     match = fullmatch(re_string, input_str)
 
     if match:
