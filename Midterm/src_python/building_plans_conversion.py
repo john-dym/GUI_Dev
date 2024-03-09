@@ -88,10 +88,10 @@ class frmBuildingPlansConversion:
         self.btnConvert.configure(highlightcolor="#000000")
         self.btnConvert.configure(relief="ridge")
         self.btnConvert.configure(text='''Convert''')
+        self.btnConvert.configure(command=self.calculate)
 
         self.lblFrameSelection = tk.LabelFrame(self.top)
-        self.lblFrameSelection.place(relx=0.525, rely=0.45, relheight=0.275
-                , relwidth=0.425)
+        self.lblFrameSelection.place(relx=0.525, rely=0.4, relheight=0.275, relwidth = 0.425)
         self.lblFrameSelection.configure(relief='groove')
         self.lblFrameSelection.configure(font="-family {Segoe UI} -size 18 -weight bold")
         self.lblFrameSelection.configure(foreground="#ffffff")
@@ -99,44 +99,45 @@ class frmBuildingPlansConversion:
         self.lblFrameSelection.configure(background="#4b0083")
         self.lblFrameSelection.configure(highlightbackground="#d9d9d9")
         self.lblFrameSelection.configure(highlightcolor="#000000")
+        self.lblFrameSelection.lift()
 
-        self.Radiobutton1 = tk.Radiobutton(self.lblFrameSelection)
-        self.Radiobutton1.place(relx=0.029, rely=0.303, relheight=0.212
-                , relwidth=0.759, bordermode='ignore')
-        self.Radiobutton1.configure(activebackground="#d9d9d9")
-        self.Radiobutton1.configure(activeforeground="black")
-        self.Radiobutton1.configure(anchor='w')
-        self.Radiobutton1.configure(background="#4b0083")
-        self.Radiobutton1.configure(compound='left')
-        self.Radiobutton1.configure(disabledforeground="#a3a3a3")
-        self.Radiobutton1.configure(font="-family {Segoe UI} -size 18")
-        self.Radiobutton1.configure(foreground="#ffffff")
-        self.Radiobutton1.configure(highlightbackground="#d9d9d9")
-        self.Radiobutton1.configure(highlightcolor="#000000")
-        self.Radiobutton1.configure(justify='left')
-        self.Radiobutton1.configure(text='''Inches to Meters''')
-        self.Radiobutton1.configure(variable=self.SelectedButton)
-        self.Radiobutton1.configure(value=1)
-        self.Radiobutton1.configure(selectcolor='black')
+        self.RdButtonInToMeters = tk.Radiobutton(self.lblFrameSelection)
+        self.RdButtonInToMeters.place(relx=0.029, rely=0.303, relheight=0.212
+                                      , relwidth=0.759, bordermode='ignore')
+        self.RdButtonInToMeters.configure(activebackground="#d9d9d9")
+        self.RdButtonInToMeters.configure(activeforeground="black")
+        self.RdButtonInToMeters.configure(anchor='w')
+        self.RdButtonInToMeters.configure(background="#4b0083")
+        self.RdButtonInToMeters.configure(compound='left')
+        self.RdButtonInToMeters.configure(disabledforeground="#a3a3a3")
+        self.RdButtonInToMeters.configure(font="-family {Segoe UI} -size 18")
+        self.RdButtonInToMeters.configure(foreground="#ffffff")
+        self.RdButtonInToMeters.configure(highlightbackground="#d9d9d9")
+        self.RdButtonInToMeters.configure(highlightcolor="#000000")
+        self.RdButtonInToMeters.configure(justify='left')
+        self.RdButtonInToMeters.configure(text='''Inches to Meters''')
+        self.RdButtonInToMeters.configure(variable=self.SelectedButton)
+        self.RdButtonInToMeters.configure(value=1)
+        self.RdButtonInToMeters.configure(selectcolor='black')
 
-        self.Radiobutton2 = tk.Radiobutton(self.lblFrameSelection)
-        self.Radiobutton2.place(relx=0.029, rely=0.606, relheight=0.212
-                , relwidth=0.759, bordermode='ignore')
-        self.Radiobutton2.configure(activebackground="#d9d9d9")
-        self.Radiobutton2.configure(activeforeground="black")
-        self.Radiobutton2.configure(anchor='w')
-        self.Radiobutton2.configure(background="#4b0083")
-        self.Radiobutton2.configure(compound='left')
-        self.Radiobutton2.configure(disabledforeground="#a3a3a3")
-        self.Radiobutton2.configure(font="-family {Segoe UI} -size 18")
-        self.Radiobutton2.configure(foreground="#ffffff")
-        self.Radiobutton2.configure(highlightbackground="#d9d9d9")
-        self.Radiobutton2.configure(highlightcolor="#000000")
-        self.Radiobutton2.configure(justify='left')
-        self.Radiobutton2.configure(text='''Meters to Inches''')
-        self.Radiobutton2.configure(variable=self.SelectedButton)
-        self.Radiobutton2.configure(value=2)
-        self.Radiobutton2.configure(selectcolor="black")
+        self.RdButtonMetersToInch = tk.Radiobutton(self.lblFrameSelection)
+        self.RdButtonMetersToInch.place(relx=0.029, rely=0.606, relheight=0.212
+                                        , relwidth=0.759, bordermode='ignore')
+        self.RdButtonMetersToInch.configure(activebackground="#d9d9d9")
+        self.RdButtonMetersToInch.configure(activeforeground="black")
+        self.RdButtonMetersToInch.configure(anchor='w')
+        self.RdButtonMetersToInch.configure(background="#4b0083")
+        self.RdButtonMetersToInch.configure(compound='left')
+        self.RdButtonMetersToInch.configure(disabledforeground="#a3a3a3")
+        self.RdButtonMetersToInch.configure(font="-family {Segoe UI} -size 18")
+        self.RdButtonMetersToInch.configure(foreground="#ffffff")
+        self.RdButtonMetersToInch.configure(highlightbackground="#d9d9d9")
+        self.RdButtonMetersToInch.configure(highlightcolor="#000000")
+        self.RdButtonMetersToInch.configure(justify='left')
+        self.RdButtonMetersToInch.configure(text='''Meters to Inches''')
+        self.RdButtonMetersToInch.configure(variable=self.SelectedButton)
+        self.RdButtonMetersToInch.configure(value=2)
+        self.RdButtonMetersToInch.configure(selectcolor="black")
 
         self.HeaderFrame = tk.Frame(self.top)
         self.HeaderFrame.place(relx=0.0, rely=0.05, relheight=0.342
@@ -175,18 +176,32 @@ class frmBuildingPlansConversion:
         self.lblInstructions.configure(highlightcolor="#000000")
         self.lblInstructions.configure(text='''Enter a value and \nchoose conversion''')
 
-        self.Entry1 = tk.Entry(self.HeaderFrame)
-        self.Entry1.place(relx=0.775, rely=0.537, height=50, relwidth=0.168)
-        self.Entry1.configure(background="#4b0083")
-        self.Entry1.configure(disabledforeground="#a3a3a3")
-        self.Entry1.configure(font="-family {Courier New} -size 20 -weight bold")
-        self.Entry1.configure(foreground="#ffffff")
-        self.Entry1.configure(highlightbackground="#d9d9d9")
-        self.Entry1.configure(highlightcolor="#000000")
-        self.Entry1.configure(insertbackground="#000000")
-        self.Entry1.configure(selectbackground="#d9d9d9")
-        self.Entry1.configure(selectforeground="black")
-        self.Entry1.configure(textvariable=self.ValueInput)
+        self.lblOutput = tk.Label(self.top)
+        self.lblOutput.place(relx=0.35, rely=0.683, height=61, width=474)
+        self.lblOutput.configure(activebackground="#d9d9d9")
+        self.lblOutput.configure(activeforeground="black")
+        self.lblOutput.configure(anchor='e')
+        self.lblOutput.configure(background="#c0c0ff")
+        self.lblOutput.configure(compound='left')
+        self.lblOutput.configure(disabledforeground="#a3a3a3")
+        self.lblOutput.configure(font="-family {Segoe UI} -size 20 -weight bold")
+        self.lblOutput.configure(foreground="#000000")
+        self.lblOutput.configure(highlightbackground="#d9d9d9")
+        self.lblOutput.configure(highlightcolor="#000000")
+        self.lblOutput.configure(text='''''')
+
+        self.EntryValue = tk.Entry(self.HeaderFrame)
+        self.EntryValue.place(relx=0.775, rely=0.537, height=50, relwidth=0.168)
+        self.EntryValue.configure(background="#4b0083")
+        self.EntryValue.configure(disabledforeground="#a3a3a3")
+        self.EntryValue.configure(font="-family {Courier New} -size 20 -weight bold")
+        self.EntryValue.configure(foreground="#ffffff")
+        self.EntryValue.configure(highlightbackground="#d9d9d9")
+        self.EntryValue.configure(highlightcolor="#000000")
+        self.EntryValue.configure(insertbackground="#000000")
+        self.EntryValue.configure(selectbackground="#d9d9d9")
+        self.EntryValue.configure(selectforeground="black")
+        self.EntryValue.configure(textvariable=self.ValueInput)
 
         self.lblPic = tk.Label(self.HeaderFrame)
         self.lblPic.place(relx=0.0, rely=0.0, height=205, width=264)
@@ -206,6 +221,39 @@ class frmBuildingPlansConversion:
         self.ValueInput.set("")
         self.ValueOutput.set("")
         self.SelectedButton.set(1)
+
+    def convert_input(self):
+        if gui_tools.validate_positive_float_input(self.ValueInput.get()):
+            return float(self.ValueInput.get())
+        else:
+            self.invalid_input()
+    def calculate(self):
+        value = self.convert_input()
+        if not value: return
+
+        entry_value = self.EntryValue.get()
+        display = ""
+        converted_value = 0.0
+        if self.SelectedButton.get() == 1:  #Inches to Meters
+            converted_value = self.inch_to_meter(value)
+            display = f"{entry_value} inches is {converted_value:.3f} meters."
+        elif self.SelectedButton.get() == 2: #Meters to inches
+            converted_value = self.meter_to_inch(value)
+            display = f"{entry_value} meters is {converted_value:.3f} inches."
+
+        self.lblOutput.configure(text=display)
+
+    def invalid_input(self):
+        title = "Invalid input"
+        message = "Please enter a valid number."
+        gui_tools.error_message(title, message)
+        self.clear()
+
+    def inch_to_meter(self, inch_value):
+        return inch_value * 0.0254
+
+    def meter_to_inch(self, meter_value):
+        return meter_value * 39.3701
 
 def start_up():
     building_plans_conversion_support.main()
