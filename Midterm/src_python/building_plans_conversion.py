@@ -45,7 +45,8 @@ class frmBuildingPlansConversion:
 
         self.top = top
         self.ValueInput = tk.StringVar()
-        self.selectedButton = tk.IntVar()
+        self.SelectedButton = tk.IntVar(value=1)
+        self.ValueOutput = tk.StringVar()
 
         self.btnExit = tk.Button(self.top)
         self.btnExit.place(relx=0.694, rely=0.817, height=56, width=177)
@@ -59,6 +60,7 @@ class frmBuildingPlansConversion:
         self.btnExit.configure(highlightcolor="#000000")
         self.btnExit.configure(relief="ridge")
         self.btnExit.configure(text='''Exit''')
+        self.btnExit.configure(command=quit)
 
         self.btnClear = tk.Button(self.top)
         self.btnClear.place(relx=0.39, rely=0.817, height=56, width=177)
@@ -72,6 +74,7 @@ class frmBuildingPlansConversion:
         self.btnClear.configure(highlightcolor="#000000")
         self.btnClear.configure(relief="ridge")
         self.btnClear.configure(text='''Clear''')
+        self.btnClear.configure(command=self.clear)
 
         self.btnConvert = tk.Button(self.top)
         self.btnConvert.place(relx=0.083, rely=0.817, height=56, width=177)
@@ -112,7 +115,9 @@ class frmBuildingPlansConversion:
         self.Radiobutton1.configure(highlightcolor="#000000")
         self.Radiobutton1.configure(justify='left')
         self.Radiobutton1.configure(text='''Inches to Meters''')
-        self.Radiobutton1.configure(variable=self.selectedButton)
+        self.Radiobutton1.configure(variable=self.SelectedButton)
+        self.Radiobutton1.configure(value=1)
+        self.Radiobutton1.configure(selectcolor='black')
 
         self.Radiobutton2 = tk.Radiobutton(self.lblFrameSelection)
         self.Radiobutton2.place(relx=0.029, rely=0.606, relheight=0.212
@@ -129,7 +134,9 @@ class frmBuildingPlansConversion:
         self.Radiobutton2.configure(highlightcolor="#000000")
         self.Radiobutton2.configure(justify='left')
         self.Radiobutton2.configure(text='''Meters to Inches''')
-        self.Radiobutton2.configure(variable=self.selectedButton)
+        self.Radiobutton2.configure(variable=self.SelectedButton)
+        self.Radiobutton2.configure(value=2)
+        self.Radiobutton2.configure(selectcolor="black")
 
         self.HeaderFrame = tk.Frame(self.top)
         self.HeaderFrame.place(relx=0.0, rely=0.05, relheight=0.342
@@ -194,7 +201,11 @@ class frmBuildingPlansConversion:
         self.lblPic.configure(highlightcolor="#000000")
         gui_tools.image_to_label(_building_image_path, self.lblPic, (205,264))
 
-
+    def clear(self):
+        #Clears input and output
+        self.ValueInput.set("")
+        self.ValueOutput.set("")
+        self.SelectedButton.set(1)
 
 def start_up():
     building_plans_conversion_support.main()

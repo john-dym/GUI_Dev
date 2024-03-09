@@ -3,6 +3,8 @@
 # Access to commonly used functions
 
 from PIL import Image, ImageTk
+from re import fullmatch
+from tkinter import messagebox
 def calculate_window_pos(display_width, display_height, window_width, window_height):
     #Calculates the center position of the app window on startup
     screen_center_x = display_width // 2
@@ -38,6 +40,17 @@ def image_to_label(image_path, label_widget, label_size):
     label_widget.configure(image=photo)
     label_widget.image = photo
 
+def validate_int_only(input_str):
+    re_string = "[0-9]*"
+    match = fullmatch(re_string, input_str)
+
+    if match:
+        return True
+    else:
+        return False
+
+def error_message(title, error_message):
+    messagebox.showerror(title=title, message=error_message)
 
 if __name__ == "__main__":
     pass

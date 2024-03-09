@@ -9,3 +9,4 @@ Author: John Morales
 * PyCharm Professional
 
 ## Issues
+* Making the radio button text white also makes the select radio button white
