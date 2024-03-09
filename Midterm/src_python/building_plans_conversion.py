@@ -10,6 +10,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter.constants import *
 import os.path
+import gui_tools
 
 _location = os.path.dirname(__file__)
 
@@ -21,14 +22,16 @@ _tabfg1 = 'black'
 _tabfg2 = 'white' 
 _bgmode = 'light' 
 _tabbg1 = '#d9d9d9' 
-_tabbg2 = 'gray40' 
+_tabbg2 = 'gray40'
+_default_win_size = "800x600"
 
 class frmBuildingPlansConversion:
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
 
-        top.geometry("800x600+632+324")
+        # top.geometry("800x600+632+324")
+        top.geometry(gui_tools.windows_geometry_pos(_default_win_size))
         top.minsize(120, 1)
         top.maxsize(2052, 1261)
         top.resizable(1,  1)
