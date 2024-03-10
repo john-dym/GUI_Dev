@@ -46,7 +46,6 @@ class frmBuildingPlansConversion:
         self.top = top
         self.ValueInput = tk.StringVar()
         self.SelectedButton = tk.IntVar(value=1)
-        self.ValueOutput = tk.StringVar()
 
         self.btnExit = tk.Button(self.top)
         self.btnExit.place(relx=0.694, rely=0.817, height=56, width=177)
@@ -74,7 +73,7 @@ class frmBuildingPlansConversion:
         self.btnClear.configure(highlightcolor="#000000")
         self.btnClear.configure(relief="ridge")
         self.btnClear.configure(text='''Clear''')
-        self.btnClear.configure(command=self.clear)
+        self.btnClear.configure(command=self.b_clear)
 
         self.btnConvert = tk.Button(self.top)
         self.btnConvert.place(relx=0.083, rely=0.817, height=56, width=177)
@@ -88,7 +87,7 @@ class frmBuildingPlansConversion:
         self.btnConvert.configure(highlightcolor="#000000")
         self.btnConvert.configure(relief="ridge")
         self.btnConvert.configure(text='''Convert''')
-        self.btnConvert.configure(command=self.calculate)
+        self.btnConvert.configure(command=self.b_convert)
 
         self.lblFrameSelection = tk.LabelFrame(self.top)
         self.lblFrameSelection.place(relx=0.525, rely=0.4, relheight=0.275, relwidth = 0.425)
@@ -177,7 +176,7 @@ class frmBuildingPlansConversion:
         self.lblInstructions.configure(text='''Enter a value and \nchoose conversion''')
 
         self.lblOutput = tk.Label(self.top)
-        self.lblOutput.place(relx=0.35, rely=0.683, height=61, width=474)
+        self.lblOutput.place(relx=0.05, rely=0.683, height=61, width=714)
         self.lblOutput.configure(activebackground="#d9d9d9")
         self.lblOutput.configure(activeforeground="black")
         self.lblOutput.configure(anchor='e')
@@ -202,6 +201,7 @@ class frmBuildingPlansConversion:
         self.EntryValue.configure(selectbackground="#d9d9d9")
         self.EntryValue.configure(selectforeground="black")
         self.EntryValue.configure(textvariable=self.ValueInput)
+        self.EntryValue.configure(justify="center")
 
         self.lblPic = tk.Label(self.HeaderFrame)
         self.lblPic.place(relx=0.0, rely=0.0, height=205, width=264)
@@ -216,38 +216,63 @@ class frmBuildingPlansConversion:
         self.lblPic.configure(highlightcolor="#000000")
         gui_tools.image_to_label(_building_image_path, self.lblPic, (205,264))
 
-    def clear(self):
+    def b_clear(self):
         #Clears input and output
         self.ValueInput.set("")
-        self.ValueOutput.set("")
         self.SelectedButton.set(1)
+        self.lblOutput.configure(text="")
+
+    def b_convert(self):
+        value = self.validate_input()
+
+        if value:
+            self.calculate_and_output(value)
+
+    def validate_input(self):
+        input = self.ValueInput.get()
+        input_match = gui_tools.validate_float_input(input)
+
+        if input_match:
+            #input is a float
+            float_value = float(self.ValueInput.get())
+
+            if float_value >= 0:
+                return float_value
+            else:
+                self.negative_number_error()
+                return None
+        else:
+            self.invalid_number_input_error()
+            return None
 
     def convert_input(self):
-        if gui_tools.validate_positive_float_input(self.ValueInput.get()):
+        if gui_tools.validate_float_input(self.ValueInput.get()):
             return float(self.ValueInput.get())
-        else:
-            self.invalid_input()
-    def calculate(self):
-        value = self.convert_input()
-        if not value: return
 
+    def calculate_and_output(self, float_value):
         entry_value = self.EntryValue.get()
         display = ""
         converted_value = 0.0
         if self.SelectedButton.get() == 1:  #Inches to Meters
-            converted_value = self.inch_to_meter(value)
+            converted_value = self.inch_to_meter(float_value)
             display = f"{entry_value} inches is {converted_value:.3f} meters."
         elif self.SelectedButton.get() == 2: #Meters to inches
-            converted_value = self.meter_to_inch(value)
+            converted_value = self.meter_to_inch(float_value)
             display = f"{entry_value} meters is {converted_value:.3f} inches."
 
         self.lblOutput.configure(text=display)
 
-    def invalid_input(self):
-        title = "Invalid input"
+    def invalid_number_input_error(self):
+        title = "Invalid input Error"
         message = "Please enter a valid number."
         gui_tools.error_message(title, message)
-        self.clear()
+        self.b_clear()
+
+    def negative_number_error(self):
+        title = "Negative Number Error"
+        message = "Please enter a positive number."
+        gui_tools.error_message(title, message)
+        self.b_clear()
 
     def inch_to_meter(self, inch_value):
         return inch_value * 0.0254
