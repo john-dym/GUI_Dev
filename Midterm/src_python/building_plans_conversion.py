@@ -98,7 +98,6 @@ class frmBuildingPlansConversion:
         self.lblFrameSelection.configure(background="#4b0083")
         self.lblFrameSelection.configure(highlightbackground="#d9d9d9")
         self.lblFrameSelection.configure(highlightcolor="#000000")
-        self.lblFrameSelection.lift()
 
         self.RdButtonInToMeters = tk.Radiobutton(self.lblFrameSelection)
         self.RdButtonInToMeters.place(relx=0.029, rely=0.303, relheight=0.212
@@ -202,6 +201,7 @@ class frmBuildingPlansConversion:
         self.EntryValue.configure(selectforeground="black")
         self.EntryValue.configure(textvariable=self.ValueInput)
         self.EntryValue.configure(justify="center")
+        self.EntryValue.bind("<Return>", lambda e: self.b_convert())
 
         self.lblPic = tk.Label(self.HeaderFrame)
         self.lblPic.place(relx=0.0, rely=0.0, height=205, width=264)

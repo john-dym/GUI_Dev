@@ -45,7 +45,7 @@ def validate_int_input(input_str):
     return re_match(re_string, input_str)
 
 def validate_float_input(input_str):
-    re_string = "-?[0-9]+\\.?[0-9]*"
+    re_string = "-?[0-9]*\\.?[0-9]*"
     return re_match(re_string, input_str)
 
 def validate_positive_float_input(input_str):
