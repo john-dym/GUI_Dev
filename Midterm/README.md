@@ -2,6 +2,7 @@
 Author: John Morales
 
 ![Building Plans Conversion](main_gui.png)
+
 ![Error Example](gui_error.png)
 
 ## Tools
