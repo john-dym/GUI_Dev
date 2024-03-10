@@ -1,3 +1,7 @@
+#Midterm - Building Plans Conversion
+#Author: John Morales - https://github.com/john-dym
+#Class: GUI Development
+
 #! /usr/bin/env python3
 #  -*- coding: utf-8 -*-
 #

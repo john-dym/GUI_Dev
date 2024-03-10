@@ -1,3 +1,7 @@
+#GUI Tools Unit Tests
+#Author: John Morales - https://github.com/john-dym
+#Class: GUI Development
+
 import unittest
 import gui_tools
 
