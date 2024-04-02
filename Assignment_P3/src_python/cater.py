@@ -145,7 +145,7 @@ class frmCatering:
         self.lblPicture.configure(foreground="#000000")
         self.lblPicture.configure(highlightbackground="#d9d9d9")
         self.lblPicture.configure(highlightcolor="#000000")
-        self.lblPicture.configure(text='''Label''')
+        gui_tools.image_to_label(_platter_image_path, self.lblPicture, (254, 181))
 
         self.FrameFoodChoice = tk.Frame(self.top)
         self.FrameFoodChoice.place(relx=0.05, rely=0.178, relheight=0.367

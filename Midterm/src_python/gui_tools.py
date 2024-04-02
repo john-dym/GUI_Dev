@@ -30,7 +30,7 @@ def open_photo(image_path, size):
     #size is a 2 int tuple
     with Image.open(image_path) as img:
         resized_image = img.resize(size)
-        return ImageTk.PhotoImage(img)
+        return ImageTk.PhotoImage(resized_image)
 
 def image_to_label(image_path, label_widget, label_size):
     # Disabled: winfo function doesnt work unless the window is updated first

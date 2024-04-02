@@ -218,7 +218,7 @@ class frmBuildingPlansConversion:
         self.lblPic.configure(foreground="#000000")
         self.lblPic.configure(highlightbackground="#d9d9d9")
         self.lblPic.configure(highlightcolor="#000000")
-        gui_tools.image_to_label(_building_image_path, self.lblPic, (205,264))
+        gui_tools.image_to_label(_building_image_path, self.lblPic, (264,205))
 
     def b_clear(self):
         #Clears input and output
