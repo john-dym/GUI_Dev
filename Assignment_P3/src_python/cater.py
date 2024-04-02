@@ -1,3 +1,7 @@
+#P3 - Catering App
+#Author: John Morales - https://github.com/john-dym
+#Class: GUI Development
+
 #! /usr/bin/env python3
 #  -*- coding: utf-8 -*-
 #
@@ -27,6 +31,7 @@ _default_win_size = "600x450"
 _platter_image_path = "images/platter.jpg"
 
 class frmCatering:
+
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -42,8 +47,8 @@ class frmCatering:
 
         self.top = top
         self.fldPoints = tk.StringVar()
-        self.selectedFood = tk.IntVar()
-        self.selectedPay = tk.IntVar()
+        self.selectedFood = tk.IntVar(value=1)
+        self.selectedPay = tk.IntVar(value=1)
 
         self.btnCalculate = tk.Button(self.top)
         self.btnCalculate.place(relx=0.583, rely=0.778, height=26, width=87)
@@ -57,6 +62,7 @@ class frmCatering:
         self.btnCalculate.configure(highlightcolor="#000000")
         self.btnCalculate.configure(relief="groove")
         self.btnCalculate.configure(text='''Calculate''')
+        self.btnCalculate.configure(command=self.b_calculate)
 
         self.btnClear = tk.Button(self.top)
         self.btnClear.place(relx=0.767, rely=0.778, height=26, width=87)
@@ -70,6 +76,7 @@ class frmCatering:
         self.btnClear.configure(highlightcolor="#000000")
         self.btnClear.configure(relief="groove")
         self.btnClear.configure(text='''Clear''')
+        self.btnClear.configure(command=self.b_clear)
 
         self.EntryLoyaltyPoints = tk.Entry(self.top)
         self.EntryLoyaltyPoints.place(relx=0.817, rely=0.489, height=30
@@ -86,19 +93,19 @@ class frmCatering:
         self.EntryLoyaltyPoints.configure(selectforeground="black")
         self.EntryLoyaltyPoints.configure(textvariable=self.fldPoints)
 
-        self.Label2 = tk.Label(self.top)
-        self.Label2.place(relx=0.6, rely=0.467, height=51, width=114)
-        self.Label2.configure(activebackground="#f5deb5")
-        self.Label2.configure(activeforeground="black")
-        self.Label2.configure(anchor='w')
-        self.Label2.configure(background="#f5deb5")
-        self.Label2.configure(compound='left')
-        self.Label2.configure(disabledforeground="#a3a3a3")
-        self.Label2.configure(font="-family {Segoe UI} -size 12 -weight bold")
-        self.Label2.configure(foreground="#000000")
-        self.Label2.configure(highlightbackground="#d9d9d9")
-        self.Label2.configure(highlightcolor="#000000")
-        self.Label2.configure(text='''Loyalty Points''')
+        self.lblPoints = tk.Label(self.top)
+        self.lblPoints.place(relx=0.6, rely=0.467, height=51, width=114)
+        self.lblPoints.configure(activebackground="#f5deb5")
+        self.lblPoints.configure(activeforeground="black")
+        self.lblPoints.configure(anchor='w')
+        self.lblPoints.configure(background="#f5deb5")
+        self.lblPoints.configure(compound='left')
+        self.lblPoints.configure(disabledforeground="#a3a3a3")
+        self.lblPoints.configure(font="-family {Segoe UI} -size 12 -weight bold")
+        self.lblPoints.configure(foreground="#000000")
+        self.lblPoints.configure(highlightbackground="#d9d9d9")
+        self.lblPoints.configure(highlightcolor="#000000")
+        self.lblPoints.configure(text='''Loyalty Points''')
 
         self.lblTitle = tk.Label(self.top)
         self.lblTitle.place(relx=0.183, rely=0.022, height=31, width=124)
@@ -130,7 +137,7 @@ class frmCatering:
         self.lblPicture.place(relx=0.567, rely=0.022, height=181, width=254)
         self.lblPicture.configure(activebackground="#d9d9d9")
         self.lblPicture.configure(activeforeground="black")
-        self.lblPicture.configure(anchor='w')
+        self.lblPicture.configure(anchor='center')
         self.lblPicture.configure(background="#d9d9d9")
         self.lblPicture.configure(compound='left')
         self.lblPicture.configure(disabledforeground="#a3a3a3")
@@ -165,6 +172,7 @@ class frmCatering:
         self.radioFood01.configure(justify='left')
         self.radioFood01.configure(text='''Radio''')
         self.radioFood01.configure(variable=self.selectedFood)
+        self.radioFood01.configure(value=1)
 
         self.radioFood02 = tk.Radiobutton(self.FrameFoodChoice)
         self.radioFood02.place(relx=0.035, rely=0.242, relheight=0.115
@@ -182,6 +190,7 @@ class frmCatering:
         self.radioFood02.configure(justify='left')
         self.radioFood02.configure(text='''Radio''')
         self.radioFood02.configure(variable=self.selectedFood)
+        self.radioFood02.configure(value=2)
 
         self.radioFood03 = tk.Radiobutton(self.FrameFoodChoice)
         self.radioFood03.place(relx=0.035, rely=0.424, relheight=0.115
@@ -199,6 +208,7 @@ class frmCatering:
         self.radioFood03.configure(justify='left')
         self.radioFood03.configure(text='''Radio''')
         self.radioFood03.configure(variable=self.selectedFood)
+        self.radioFood03.configure(value=3)
 
         self.radioFood04 = tk.Radiobutton(self.FrameFoodChoice)
         self.radioFood04.place(relx=0.035, rely=0.606, relheight=0.115
@@ -216,6 +226,7 @@ class frmCatering:
         self.radioFood04.configure(justify='left')
         self.radioFood04.configure(text='''Radio''')
         self.radioFood04.configure(variable=self.selectedFood)
+        self.radioFood04.configure(value=4)
 
         self.radioFood05 = tk.Radiobutton(self.FrameFoodChoice)
         self.radioFood05.place(relx=0.035, rely=0.788, relheight=0.115
@@ -233,6 +244,7 @@ class frmCatering:
         self.radioFood05.configure(justify='left')
         self.radioFood05.configure(text='''Radio''')
         self.radioFood05.configure(variable=self.selectedFood)
+        self.radioFood05.configure(value=5)
 
         self.Label3 = tk.Label(self.top)
         self.Label3.place(relx=0.15, rely=0.867, height=31, width=124)
@@ -273,6 +285,7 @@ class frmCatering:
         self.radioPay01.configure(justify='left')
         self.radioPay01.configure(text='''Pre-Pay''')
         self.radioPay01.configure(variable=self.selectedPay)
+        self.radioPay01.configure(value=1)
 
         self.radioPay02 = tk.Radiobutton(self.FramePayChoice)
         self.radioPay02.place(relx=0.054, rely=0.533, relheight=0.253
@@ -290,6 +303,51 @@ class frmCatering:
         self.radioPay02.configure(justify='left')
         self.radioPay02.configure(text='''Pay upon Pickup''')
         self.radioPay02.configure(variable=self.selectedPay)
+        self.radioPay02.configure(value=2)
+
+        # Section to edit radio labels
+        self.radioFood01.configure(text="Gourmet Cheese $49.99")
+        self.radioFood02.configure(text="Pinwheel Wraps $59.99")
+        self.radioFood03.configure(text="Veggie $29.99")
+        self.radioFood04.configure(text="Sausage and Cheese $49.99")
+        self.radioFood05.configure(text="Fruit $29.99")
+
+    def b_clear(self):
+        # Clears input and output and sets default values
+        self.fldPoints.set("")
+        self.selectedPay.set(1)
+        self.selectedFood.set(1)
+
+    def b_calculate(self):
+        pass
+
+    def validate_input(self):
+        input = self.fldPoints.get()
+        input_match = gui_tools.validate_int_input(input)
+
+        if input_match:
+            #input is a valid integer
+            int_value = int(input_match)
+
+            if int_value >= 0:
+                return int_value
+            else:
+                self.negative_number_error()
+                return None
+        else:
+            self.invalid_number_input_error()
+            return None
+    def invalid_number_input_error(self):
+        title = "Invalid input Error"
+        message = "Please enter a valid number."
+        gui_tools.error_message(title, message)
+        self.b_clear()
+
+    def negative_number_error(self):
+        title = "Negative Number Error"
+        message = "Please enter a positive number."
+        gui_tools.error_message(title, message)
+        self.b_clear()
 
 def start_up():
     cater_support.main()
