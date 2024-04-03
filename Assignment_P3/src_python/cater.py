@@ -19,6 +19,8 @@ import gui_tools
 _location = os.path.dirname(__file__)
 
 import cater_support
+from platter_item import platter_item
+from decimal import Decimal
 
 _bgcolor = '#d9d9d9'
 _fgcolor = '#000000'
@@ -49,6 +51,8 @@ class frmCatering:
         self.fldPoints = tk.StringVar()
         self.selectedFood = tk.IntVar(value=1)
         self.selectedPay = tk.IntVar(value=1)
+        self.platters = {}
+        self.foodButtons = []
 
         self.btnCalculate = tk.Button(self.top)
         self.btnCalculate.place(relx=0.583, rely=0.778, height=26, width=87)
@@ -170,9 +174,9 @@ class frmCatering:
         self.radioFood01.configure(highlightbackground="#d9d9d9")
         self.radioFood01.configure(highlightcolor="#000000")
         self.radioFood01.configure(justify='left')
-        self.radioFood01.configure(text='''Radio''')
         self.radioFood01.configure(variable=self.selectedFood)
         self.radioFood01.configure(value=1)
+        self.foodButtons.append(self.radioFood01)
 
         self.radioFood02 = tk.Radiobutton(self.FrameFoodChoice)
         self.radioFood02.place(relx=0.035, rely=0.242, relheight=0.115
@@ -188,9 +192,9 @@ class frmCatering:
         self.radioFood02.configure(highlightbackground="#d9d9d9")
         self.radioFood02.configure(highlightcolor="#000000")
         self.radioFood02.configure(justify='left')
-        self.radioFood02.configure(text='''Radio''')
         self.radioFood02.configure(variable=self.selectedFood)
         self.radioFood02.configure(value=2)
+        self.foodButtons.append(self.radioFood02)
 
         self.radioFood03 = tk.Radiobutton(self.FrameFoodChoice)
         self.radioFood03.place(relx=0.035, rely=0.424, relheight=0.115
@@ -206,9 +210,9 @@ class frmCatering:
         self.radioFood03.configure(highlightbackground="#d9d9d9")
         self.radioFood03.configure(highlightcolor="#000000")
         self.radioFood03.configure(justify='left')
-        self.radioFood03.configure(text='''Radio''')
         self.radioFood03.configure(variable=self.selectedFood)
         self.radioFood03.configure(value=3)
+        self.foodButtons.append(self.radioFood03)
 
         self.radioFood04 = tk.Radiobutton(self.FrameFoodChoice)
         self.radioFood04.place(relx=0.035, rely=0.606, relheight=0.115
@@ -224,9 +228,9 @@ class frmCatering:
         self.radioFood04.configure(highlightbackground="#d9d9d9")
         self.radioFood04.configure(highlightcolor="#000000")
         self.radioFood04.configure(justify='left')
-        self.radioFood04.configure(text='''Radio''')
         self.radioFood04.configure(variable=self.selectedFood)
         self.radioFood04.configure(value=4)
+        self.foodButtons.append(self.radioFood04)
 
         self.radioFood05 = tk.Radiobutton(self.FrameFoodChoice)
         self.radioFood05.place(relx=0.035, rely=0.788, relheight=0.115
@@ -242,23 +246,38 @@ class frmCatering:
         self.radioFood05.configure(highlightbackground="#d9d9d9")
         self.radioFood05.configure(highlightcolor="#000000")
         self.radioFood05.configure(justify='left')
-        self.radioFood05.configure(text='''Radio''')
         self.radioFood05.configure(variable=self.selectedFood)
         self.radioFood05.configure(value=5)
+        self.foodButtons.append(self.radioFood05)
 
-        self.Label3 = tk.Label(self.top)
-        self.Label3.place(relx=0.15, rely=0.867, height=31, width=124)
-        self.Label3.configure(activebackground="#d9d9d9")
-        self.Label3.configure(activeforeground="black")
-        self.Label3.configure(anchor='w')
-        self.Label3.configure(background="#f5deb5")
-        self.Label3.configure(compound='left')
-        self.Label3.configure(disabledforeground="#a3a3a3")
-        self.Label3.configure(font="-family {Segoe UI} -size 12 -weight bold")
-        self.Label3.configure(foreground="#000000")
-        self.Label3.configure(highlightbackground="#d9d9d9")
-        self.Label3.configure(highlightcolor="#000000")
-        self.Label3.configure(text='''Please Pay:''')
+
+        self.lblOutputDescription = tk.Label(self.top)
+        self.lblOutputDescription.place(relx=0.15, rely=0.867, height=31, width=124)
+        self.lblOutputDescription.configure(activebackground="#d9d9d9")
+        self.lblOutputDescription.configure(activeforeground="black")
+        self.lblOutputDescription.configure(anchor='w')
+        self.lblOutputDescription.configure(background="#f5deb5")
+        self.lblOutputDescription.configure(compound='left')
+        self.lblOutputDescription.configure(disabledforeground="#a3a3a3")
+        self.lblOutputDescription.configure(font="-family {Segoe UI} -size 12 -weight bold")
+        self.lblOutputDescription.configure(foreground="#000000")
+        self.lblOutputDescription.configure(highlightbackground="#d9d9d9")
+        self.lblOutputDescription.configure(highlightcolor="#000000")
+        self.lblOutputDescription.configure(text='''Please Pay:''')
+
+        self.lblOutputCalc = tk.Label(self.top)
+        self.lblOutputCalc.place(relx=0.30, rely=0.867, height=31, width=124)
+        self.lblOutputCalc.configure(activebackground="#d9d9d9")
+        self.lblOutputCalc.configure(activeforeground="black")
+        self.lblOutputCalc.configure(anchor='w')
+        self.lblOutputCalc.configure(background="#f5deb5")
+        self.lblOutputCalc.configure(compound='left')
+        self.lblOutputCalc.configure(disabledforeground="#a3a3a3")
+        self.lblOutputCalc.configure(font="-family {Segoe UI} -size 12 -weight bold")
+        self.lblOutputCalc.configure(foreground="#000000")
+        self.lblOutputCalc.configure(highlightbackground="#d9d9d9")
+        self.lblOutputCalc.configure(highlightcolor="#000000")
+        self.lblOutputCalc.configure(text='''Please Pay:''')
 
         self.FramePayChoice = tk.Frame(self.top)
         self.FramePayChoice.place(relx=0.133, rely=0.6, relheight=0.167
@@ -305,12 +324,13 @@ class frmCatering:
         self.radioPay02.configure(variable=self.selectedPay)
         self.radioPay02.configure(value=2)
 
-        # Section to edit radio labels
-        self.radioFood01.configure(text="Gourmet Cheese $49.99")
-        self.radioFood02.configure(text="Pinwheel Wraps $59.99")
-        self.radioFood03.configure(text="Veggie $29.99")
-        self.radioFood04.configure(text="Sausage and Cheese $49.99")
-        self.radioFood05.configure(text="Fruit $29.99")
+        self.platters = {   1: platter_item("Gourmet Cheese", 49.99),
+                            2: platter_item("Pinwheel Wraps", 59.99),
+                            3: platter_item("Veggie", 29.99),
+                            4: platter_item("Sausage and Cheese", 49.99),
+                            5: platter_item("Fruit", 29.99)
+                        }
+        self.assign_food_button_labels()
 
     def b_clear(self):
         # Clears input and output and sets default values
@@ -320,6 +340,21 @@ class frmCatering:
 
     def b_calculate(self):
         pass
+
+    def assign_food_button_labels(self):
+        i = 0
+        for button in self.foodButtons:
+            i += 1
+            try:
+                platter = self.platters.get(i)
+            except KeyError:
+                button.configure(state='disabled')
+                continue
+            else:
+                button.configure(text=f"{platter.get_name()} ${platter.get_price()}")
+
+    def selected_food_platter(self):
+        return self.platters.get(self.selectedFood.get())
 
     def validate_input(self):
         input = self.fldPoints.get()
