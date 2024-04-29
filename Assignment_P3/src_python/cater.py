@@ -52,7 +52,9 @@ class frmCatering:
         self.selectedFood = tk.IntVar(value=1)
         self.selectedPay = tk.IntVar(value=1)
         self.platters = {}
+        self.paymentMethods = {}
         self.foodButtons = []
+        self.paymentButtons = []
 
         self.btnCalculate = tk.Button(self.top)
         self.btnCalculate.place(relx=0.583, rely=0.778, height=26, width=87)
@@ -263,13 +265,13 @@ class frmCatering:
         self.lblOutputDescription.configure(foreground="#000000")
         self.lblOutputDescription.configure(highlightbackground="#d9d9d9")
         self.lblOutputDescription.configure(highlightcolor="#000000")
-        self.lblOutputDescription.configure(text='''Please Pay:''')
+        self.lblOutputDescription.configure(text="Please Pay: ")
 
         self.lblOutputCalc = tk.Label(self.top)
-        self.lblOutputCalc.place(relx=0.30, rely=0.867, height=31, width=124)
+        self.lblOutputCalc.place(relx=0.30, rely=0.867, height=61, width=424)
         self.lblOutputCalc.configure(activebackground="#d9d9d9")
         self.lblOutputCalc.configure(activeforeground="black")
-        self.lblOutputCalc.configure(anchor='w')
+        self.lblOutputCalc.configure(anchor='nw')
         self.lblOutputCalc.configure(background="#f5deb5")
         self.lblOutputCalc.configure(compound='left')
         self.lblOutputCalc.configure(disabledforeground="#a3a3a3")
@@ -277,7 +279,8 @@ class frmCatering:
         self.lblOutputCalc.configure(foreground="#000000")
         self.lblOutputCalc.configure(highlightbackground="#d9d9d9")
         self.lblOutputCalc.configure(highlightcolor="#000000")
-        self.lblOutputCalc.configure(text='''Please Pay:''')
+        # self.lblOutputCalc.configure(justify="left")
+        self.lblOutputCalc.configure(wraplength=424)
 
         self.FramePayChoice = tk.Frame(self.top)
         self.FramePayChoice.place(relx=0.133, rely=0.6, relheight=0.167
@@ -302,9 +305,9 @@ class frmCatering:
         self.radioPay01.configure(highlightbackground="#d9d9d9")
         self.radioPay01.configure(highlightcolor="#000000")
         self.radioPay01.configure(justify='left')
-        self.radioPay01.configure(text='''Pre-Pay''')
         self.radioPay01.configure(variable=self.selectedPay)
         self.radioPay01.configure(value=1)
+        self.paymentButtons.append(self.radioPay01)
 
         self.radioPay02 = tk.Radiobutton(self.FramePayChoice)
         self.radioPay02.place(relx=0.054, rely=0.533, relheight=0.253
@@ -320,9 +323,9 @@ class frmCatering:
         self.radioPay02.configure(highlightbackground="#d9d9d9")
         self.radioPay02.configure(highlightcolor="#000000")
         self.radioPay02.configure(justify='left')
-        self.radioPay02.configure(text='''Pay upon Pickup''')
         self.radioPay02.configure(variable=self.selectedPay)
         self.radioPay02.configure(value=2)
+        self.paymentButtons.append(self.radioPay02)
 
         self.platters = {   1: platter_item("Gourmet Cheese", 49.99),
                             2: platter_item("Pinwheel Wraps", 59.99),
@@ -332,14 +335,25 @@ class frmCatering:
                         }
         self.assign_food_button_labels()
 
+        self.paymentMethods = {1: "Pre-Pay",
+                               2: "Pay upon Pickup"
+                               }
+
+        self.assign_payment_button_labels()
+
     def b_clear(self):
         # Clears input and output and sets default values
         self.fldPoints.set("")
         self.selectedPay.set(1)
         self.selectedFood.set(1)
+        self.lblOutputCalc.configure(text="")
 
     def b_calculate(self):
-        pass
+        platter = self.selected_food_platter()
+        points = self.validate_input()
+        selected_pay = self.selected_payment_method()
+
+        self.display_output(platter.get_name(), platter.get_price(), selected_pay, points)
 
     def assign_food_button_labels(self):
         i = 0
@@ -353,8 +367,27 @@ class frmCatering:
             else:
                 button.configure(text=f"{platter.get_name()} ${platter.get_price()}")
 
+    def assign_payment_button_labels(self):
+        i = 0
+        for button in self.paymentButtons:
+            i += 1
+            try:
+                payment = self.paymentMethods.get(i)
+            except KeyError:
+                button.configure(state="disabled")
+                continue
+            else:
+                button.configure(text=payment)
+
     def selected_food_platter(self):
         return self.platters.get(self.selectedFood.get())
+
+    def selected_payment_method(self):
+        return self.paymentMethods.get(self.selectedPay.get())
+
+    def calculate_discount(self, points):
+        #5 percent for every 10 points
+        return
 
     def validate_input(self):
         input = self.fldPoints.get()
@@ -372,6 +405,7 @@ class frmCatering:
         else:
             self.invalid_number_input_error()
             return None
+
     def invalid_number_input_error(self):
         title = "Invalid input Error"
         message = "Please enter a valid number."
@@ -384,6 +418,15 @@ class frmCatering:
         gui_tools.error_message(title, message)
         self.b_clear()
 
+    def display_output(self, platter_name, price, selected_pay_method, points):
+        # example: Your order Veggie Plater costs $28.49 using Pre-Pay after discount of 10 loyalty points.
+        output = f"Your order {platter_name} costs ${price} using {selected_pay_method}"
+
+        if points:
+            output += f" after discount of {points} loyalty points."
+        else:
+            output += "."
+        self.lblOutputCalc.configure(text= output)
 def start_up():
     cater_support.main()
 
