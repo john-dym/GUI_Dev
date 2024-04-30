@@ -1,4 +1,4 @@
-#Midterm - Building Plans Conversion
+#Final - Building Plans Conversion
 #Author: John Morales - https://github.com/john-dym
 #Class: GUI Development
 
@@ -27,7 +27,7 @@ _tabfg2 = 'white'
 _bgmode = 'light' 
 _tabbg1 = '#d9d9d9' 
 _tabbg2 = 'gray40'
-_default_win_size = "800x600"
+_default_win_size = "800x800"
 _building_image_path = "images/building.png"
 
 class frmBuildingPlansConversion:
@@ -94,7 +94,7 @@ class frmBuildingPlansConversion:
         self.btnConvert.configure(command=self.b_convert)
 
         self.lblFrameSelection = tk.LabelFrame(self.top)
-        self.lblFrameSelection.place(relx=0.525, rely=0.4, relheight=0.275, relwidth = 0.425)
+        self.lblFrameSelection.place(relx=0.525, rely=0.4, relheight=0.175, relwidth = 0.425)
         self.lblFrameSelection.configure(relief='groove')
         self.lblFrameSelection.configure(font="-family {Segoe UI} -size 18 -weight bold")
         self.lblFrameSelection.configure(foreground="#ffffff")
@@ -162,7 +162,7 @@ class frmBuildingPlansConversion:
         self.lblTitle.configure(foreground="#000000")
         self.lblTitle.configure(highlightbackground="#d9d9d9")
         self.lblTitle.configure(highlightcolor="#000000")
-        self.lblTitle.configure(text='''Converter App''')
+        self.lblTitle.configure(text='''Converter App 2''')
 
         self.lblInstructions = tk.Label(self.HeaderFrame)
         self.lblInstructions.place(relx=0.4, rely=0.45, height=91, width=246)

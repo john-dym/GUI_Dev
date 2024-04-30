@@ -1,4 +1,4 @@
-# Midterm - Building Plans Conversion
+# Final - Building Plans Conversion
 
 Author: John Morales
 Class: GUI Development
