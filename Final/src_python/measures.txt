@@ -1,1 +1,2 @@
-333 inches is 8.46 meters
+10 inches is 0.25 meters
+40 meters is 1574.80 inches
