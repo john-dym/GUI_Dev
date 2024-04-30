@@ -12,4 +12,4 @@ Class: GUI Development
 * PyCharm Professional
 
 ## Issues
-* Making the radio button text white also makes the select radio button white
+* Changed my git work flow to do development on a seperate feature branch. Finished the app and then lost all changes when trying to merge the feature branch into main. Had to redo everything but it was fast since I remembered most of the code written.

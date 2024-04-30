@@ -37,7 +37,7 @@ class frmBuildingPlansConversion:
         top.minsize(120, 1)
         top.maxsize(2052, 1261)
         top.resizable(1,  1)
-        top.title("Building Plans Conversion")
+        top.title("Building Plans Conversion 2")
         top.configure(background="#b0c4de")
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="#000000")
@@ -184,7 +184,6 @@ class frmBuildingPlansConversion:
         self.lblPic.configure(foreground="#000000")
         self.lblPic.configure(highlightbackground="#d9d9d9")
         self.lblPic.configure(highlightcolor="#000000")
-        self.lblPic.configure(text='''building.jpg''')
         gui_tools.image_to_label(_building_image_path, self.lblPic, (264,205))
 
         self.lblFrameSelection = tk.LabelFrame(self.top)
@@ -345,13 +344,13 @@ class frmBuildingPlansConversion:
         title = "Invalid input Error"
         message = "Please enter a valid number."
         gui_tools.error_message(title, message)
-        self.b_clear_list()
+        self.b_clear_results()
 
     def negative_number_error(self):
         title = "Negative Number Error"
         message = "Please enter a positive number."
         gui_tools.error_message(title, message)
-        self.b_clear_list()
+        self.b_clear_results()
 
     def inch_to_meter(self, inch_value):
         return inch_value * 0.0254
