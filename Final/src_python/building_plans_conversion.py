@@ -33,7 +33,6 @@ class frmBuildingPlansConversion:
         app_size_pos = gui_tools.windows_geometry(top, _default_win_size)
 
         top.geometry(app_size_pos)
-        top.geometry("800x800+1279+226")
         top.minsize(120, 1)
         top.maxsize(2052, 1261)
         top.resizable(1,  1)
