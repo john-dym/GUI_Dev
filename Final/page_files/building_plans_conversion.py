@@ -10,7 +10,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter.constants import *
 import os.path
-import gui_tools
+
 _location = os.path.dirname(__file__)
 
 import building_plans_conversion_support
@@ -21,18 +21,13 @@ _tabfg1 = 'black'
 _tabfg2 = 'white' 
 _bgmode = 'light' 
 _tabbg1 = '#d9d9d9' 
-_tabbg2 = 'gray40'
-_default_win_size = "800x800"
-_building_image_path = "images/building.png"
-_save_file_name = "measures.txt"
+_tabbg2 = 'gray40' 
 
 class frmBuildingPlansConversion:
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
-        app_size_pos = gui_tools.windows_geometry(top, _default_win_size)
 
-        top.geometry(app_size_pos)
         top.geometry("800x800+1279+226")
         top.minsize(120, 1)
         top.maxsize(2052, 1261)
@@ -46,8 +41,8 @@ class frmBuildingPlansConversion:
         self.ValueInput = tk.StringVar()
         self.txtConversion = tk.StringVar()
         self.txtFileSave = tk.StringVar()
-        self.SelectedButton = tk.IntVar(value=1)
-
+        self.selectedButton = tk.IntVar()
+        self.lstResults = tk.StringVar()
 
         self.btnClearList = tk.Button(self.top)
         self.btnClearList.place(relx=0.025, rely=0.825, height=36, width=127)
@@ -61,7 +56,6 @@ class frmBuildingPlansConversion:
         self.btnClearList.configure(highlightcolor="#000000")
         self.btnClearList.configure(relief="ridge")
         self.btnClearList.configure(text='''Clear List''')
-        self.btnClearList.configure(command=self.b_clear_list)
 
         self.btnSaveToFile = tk.Button(self.top)
         self.btnSaveToFile.place(relx=0.2, rely=0.825, height=36, width=127)
@@ -75,7 +69,6 @@ class frmBuildingPlansConversion:
         self.btnSaveToFile.configure(highlightcolor="#000000")
         self.btnSaveToFile.configure(relief="ridge")
         self.btnSaveToFile.configure(text='''Save to File''')
-        self.btnSaveToFile.configure(command=self.b_safe_to_file)
 
         self.btnClearResults = tk.Button(self.top)
         self.btnClearResults.place(relx=0.4, rely=0.725, height=36, width=177)
@@ -89,7 +82,6 @@ class frmBuildingPlansConversion:
         self.btnClearResults.configure(highlightcolor="#000000")
         self.btnClearResults.configure(relief="ridge")
         self.btnClearResults.configure(text='''Clear Results''')
-        self.btnClearResults.configure(command=self.b_clear_results)
 
         self.btnSaveResults = tk.Button(self.top)
         self.btnSaveResults.place(relx=0.4, rely=0.638, height=36, width=177)
@@ -103,7 +95,6 @@ class frmBuildingPlansConversion:
         self.btnSaveResults.configure(highlightcolor="#000000")
         self.btnSaveResults.configure(relief="ridge")
         self.btnSaveResults.configure(text='''Save Results''')
-        self.btnSaveResults.configure(command=self.b_save_results)
 
         self.btnConvert = tk.Button(self.top)
         self.btnConvert.place(relx=0.4, rely=0.475, height=36, width=177)
@@ -117,7 +108,6 @@ class frmBuildingPlansConversion:
         self.btnConvert.configure(highlightcolor="#000000")
         self.btnConvert.configure(relief="ridge")
         self.btnConvert.configure(text='''Convert''')
-        self.btnConvert.configure(command=self.b_convert)
 
         self.menubar = tk.Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
         top.configure(menu = self.menubar)
@@ -157,24 +147,23 @@ class frmBuildingPlansConversion:
         self.lblInstructions.configure(foreground="#000000")
         self.lblInstructions.configure(highlightbackground="#d9d9d9")
         self.lblInstructions.configure(highlightcolor="#000000")
-        self.lblInstructions.configure(text='''Enter a value and \nchoose conversion''')
+        self.lblInstructions.configure(text='''Enter a value and choose conversion''')
 
-        self.EntryValue = tk.Entry(self.HeaderFrame)
-        self.EntryValue.place(relx=0.775, rely=0.471, height=50, relwidth=0.168)
-        self.EntryValue.configure(background="#0000ff")
-        self.EntryValue.configure(disabledforeground="#a3a3a3")
-        self.EntryValue.configure(font="-family {Courier New} -size 16 -weight bold")
-        self.EntryValue.configure(foreground="#ffffff")
-        self.EntryValue.configure(highlightbackground="#d9d9d9")
-        self.EntryValue.configure(highlightcolor="#000000")
-        self.EntryValue.configure(insertbackground="#000000")
-        self.EntryValue.configure(selectbackground="#d9d9d9")
-        self.EntryValue.configure(selectforeground="black")
-        self.EntryValue.configure(textvariable=self.ValueInput)
-        self.EntryValue.bind("<Return>", lambda e: self.b_convert())
+        self.Entry1 = tk.Entry(self.HeaderFrame)
+        self.Entry1.place(relx=0.775, rely=0.471, height=50, relwidth=0.168)
+        self.Entry1.configure(background="#0000ff")
+        self.Entry1.configure(disabledforeground="#a3a3a3")
+        self.Entry1.configure(font="-family {Courier New} -size 16 -weight bold")
+        self.Entry1.configure(foreground="#ffffff")
+        self.Entry1.configure(highlightbackground="#d9d9d9")
+        self.Entry1.configure(highlightcolor="#000000")
+        self.Entry1.configure(insertbackground="#000000")
+        self.Entry1.configure(selectbackground="#d9d9d9")
+        self.Entry1.configure(selectforeground="black")
+        self.Entry1.configure(textvariable=self.ValueInput)
 
         self.lblPic = tk.Label(self.HeaderFrame)
-        self.lblPic.place(relx=0.038, rely=0.0, height=205, width=264)
+        self.lblPic.place(relx=0.038, rely=0.0, height=276, width=264)
         self.lblPic.configure(activebackground="#d9d9d9")
         self.lblPic.configure(activeforeground="black")
         self.lblPic.configure(background="#d9d9d9")
@@ -185,7 +174,6 @@ class frmBuildingPlansConversion:
         self.lblPic.configure(highlightbackground="#d9d9d9")
         self.lblPic.configure(highlightcolor="#000000")
         self.lblPic.configure(text='''building.jpg''')
-        gui_tools.image_to_label(_building_image_path, self.lblPic, (264,205))
 
         self.lblFrameSelection = tk.LabelFrame(self.top)
         self.lblFrameSelection.place(relx=0.388, rely=0.288, relheight=0.165
@@ -198,43 +186,39 @@ class frmBuildingPlansConversion:
         self.lblFrameSelection.configure(highlightbackground="#d9d9d9")
         self.lblFrameSelection.configure(highlightcolor="#000000")
 
-        self.RdButtonMetersToInch = tk.Radiobutton(self.lblFrameSelection)
-        self.RdButtonMetersToInch.place(relx=0.044, rely=0.689, relheight=0.159
-                                        , relwidth=0.759, bordermode='ignore')
-        self.RdButtonMetersToInch.configure(activebackground="#d9d9d9")
-        self.RdButtonMetersToInch.configure(activeforeground="black")
-        self.RdButtonMetersToInch.configure(anchor='w')
-        self.RdButtonMetersToInch.configure(background="#0000ff")
-        self.RdButtonMetersToInch.configure(compound='left')
-        self.RdButtonMetersToInch.configure(disabledforeground="#a3a3a3")
-        self.RdButtonMetersToInch.configure(font="-family {Segoe UI} -size 18")
-        self.RdButtonMetersToInch.configure(foreground="#ffffff")
-        self.RdButtonMetersToInch.configure(highlightbackground="#d9d9d9")
-        self.RdButtonMetersToInch.configure(highlightcolor="#000000")
-        self.RdButtonMetersToInch.configure(justify='left')
-        self.RdButtonMetersToInch.configure(text='''Meters to Inches''')
-        self.RdButtonMetersToInch.configure(variable=self.SelectedButton)
-        self.RdButtonMetersToInch.configure(value=2)
-        self.RdButtonMetersToInch.configure(selectcolor="black")
+        self.Radiobutton2 = tk.Radiobutton(self.lblFrameSelection)
+        self.Radiobutton2.place(relx=0.044, rely=0.689, relheight=0.159
+                , relwidth=0.759, bordermode='ignore')
+        self.Radiobutton2.configure(activebackground="#d9d9d9")
+        self.Radiobutton2.configure(activeforeground="black")
+        self.Radiobutton2.configure(anchor='w')
+        self.Radiobutton2.configure(background="#0000ff")
+        self.Radiobutton2.configure(compound='left')
+        self.Radiobutton2.configure(disabledforeground="#a3a3a3")
+        self.Radiobutton2.configure(font="-family {Segoe UI} -size 18")
+        self.Radiobutton2.configure(foreground="#ffffff")
+        self.Radiobutton2.configure(highlightbackground="#d9d9d9")
+        self.Radiobutton2.configure(highlightcolor="#000000")
+        self.Radiobutton2.configure(justify='left')
+        self.Radiobutton2.configure(text='''Meters to Inches''')
+        self.Radiobutton2.configure(variable=self.selectedButton)
 
-        self.RdButtonInToMeters = tk.Radiobutton(self.lblFrameSelection)
-        self.RdButtonInToMeters.place(relx=0.044, rely=0.311, relheight=0.212
-                                      , relwidth=0.759, bordermode='ignore')
-        self.RdButtonInToMeters.configure(activebackground="#d9d9d9")
-        self.RdButtonInToMeters.configure(activeforeground="black")
-        self.RdButtonInToMeters.configure(anchor='w')
-        self.RdButtonInToMeters.configure(background="#0000ff")
-        self.RdButtonInToMeters.configure(compound='left')
-        self.RdButtonInToMeters.configure(disabledforeground="#a3a3a3")
-        self.RdButtonInToMeters.configure(font="-family {Segoe UI} -size 18")
-        self.RdButtonInToMeters.configure(foreground="#ffffff")
-        self.RdButtonInToMeters.configure(highlightbackground="#d9d9d9")
-        self.RdButtonInToMeters.configure(highlightcolor="#000000")
-        self.RdButtonInToMeters.configure(justify='left')
-        self.RdButtonInToMeters.configure(text='''Inches to Meters''')
-        self.RdButtonInToMeters.configure(variable=self.SelectedButton)
-        self.RdButtonInToMeters.configure(value=1)
-        self.RdButtonInToMeters.configure(selectcolor='black')
+        self.Radiobutton1 = tk.Radiobutton(self.lblFrameSelection)
+        self.Radiobutton1.place(relx=0.044, rely=0.311, relheight=0.212
+                , relwidth=0.759, bordermode='ignore')
+        self.Radiobutton1.configure(activebackground="#d9d9d9")
+        self.Radiobutton1.configure(activeforeground="black")
+        self.Radiobutton1.configure(anchor='w')
+        self.Radiobutton1.configure(background="#0000ff")
+        self.Radiobutton1.configure(compound='left')
+        self.Radiobutton1.configure(disabledforeground="#a3a3a3")
+        self.Radiobutton1.configure(font="-family {Segoe UI} -size 18")
+        self.Radiobutton1.configure(foreground="#ffffff")
+        self.Radiobutton1.configure(highlightbackground="#d9d9d9")
+        self.Radiobutton1.configure(highlightcolor="#000000")
+        self.Radiobutton1.configure(justify='left')
+        self.Radiobutton1.configure(text='''Inches to Meters''')
+        self.Radiobutton1.configure(variable=self.selectedButton)
 
         self.lstBoxResults = tk.Listbox(self.top)
         self.lstBoxResults.place(relx=0.025, rely=0.375, relheight=0.415
@@ -247,6 +231,7 @@ class frmBuildingPlansConversion:
         self.lstBoxResults.configure(highlightcolor="#000000")
         self.lstBoxResults.configure(selectbackground="#d9d9d9")
         self.lstBoxResults.configure(selectforeground="black")
+        self.lstBoxResults.configure(listvariable=self.lstResults)
 
         self.lblOutput = tk.Label(self.top)
         self.lblOutput.place(relx=0.388, rely=0.525, height=84, width=456)
@@ -260,104 +245,25 @@ class frmBuildingPlansConversion:
         self.lblOutput.configure(foreground="#000000")
         self.lblOutput.configure(highlightbackground="#d9d9d9")
         self.lblOutput.configure(highlightcolor="#000000")
+        self.lblOutput.configure(text='''10 meters oi 234.333 inches''')
         self.lblOutput.configure(textvariable=self.txtConversion)
+        self.txtConversion.set('''10 meters oi 234.333 inches''')
 
-        self.lblSaveFileOutput = tk.Label(self.top)
-        self.lblSaveFileOutput.place(relx=0.4, rely=0.788, height=84, width=456)
-        self.lblSaveFileOutput.configure(activebackground="#d9d9d9")
-        self.lblSaveFileOutput.configure(activeforeground="black")
-        self.lblSaveFileOutput.configure(anchor='w')
-        self.lblSaveFileOutput.configure(background="#b0c4de")
-        self.lblSaveFileOutput.configure(compound='left')
-        self.lblSaveFileOutput.configure(disabledforeground="#a3a3a3")
-        self.lblSaveFileOutput.configure(font="-family {Segoe UI} -size 16 -weight bold")
-        self.lblSaveFileOutput.configure(foreground="#000000")
-        self.lblSaveFileOutput.configure(highlightbackground="#d9d9d9")
-        self.lblSaveFileOutput.configure(highlightcolor="#000000")
-        self.lblSaveFileOutput.configure(textvariable=self.txtFileSave)
-
-        self.EntryValue.focus_set()
-
-    def b_clear_results(self):
-        # Clears input and output
-        self.ValueInput.set("")
-        self.SelectedButton.set(1)
-        self.txtConversion.set("")
-        self.EntryValue.focus_set()
-
-
-    def b_clear_list(self):
-        self.lstBoxResults.delete(0, tk.END)
-        self.txtFileSave.set("")
-
-    def b_convert(self):
-        value = self.validate_input()
-
-        if value:
-            self.calculate_and_output(value)
-
-    def b_save_results(self):
-        if self.txtConversion.get() != "":
-            self.lstBoxResults.insert('end', self.txtConversion.get())
-
-    def b_safe_to_file(self):
-        with open(_save_file_name, "wt") as f:
-            for entry in self.lstBoxResults.get(0, tk.END):
-                f.write(entry + "\n")
-
-        self.txtFileSave.set("Saved " + str(self.lstBoxResults.size()) + " entries to file " + _save_file_name)
-
-    def validate_input(self):
-        input = self.ValueInput.get()
-        input_match = gui_tools.validate_float_input(input)
-
-        if input_match:
-            # input is a float
-            float_value = float(self.ValueInput.get())
-
-            if float_value >= 0:
-                return float_value
-            else:
-                self.negative_number_error()
-                return None
-        else:
-            self.invalid_number_input_error()
-            return None
-
-    def convert_input(self):
-        if gui_tools.validate_float_input(self.ValueInput.get()):
-            return float(self.ValueInput.get())
-
-    def calculate_and_output(self, float_value):
-        entry_value = self.EntryValue.get()
-        display = ""
-        converted_value = 0.0
-        if self.SelectedButton.get() == 1:  # Inches to Meters
-            converted_value = self.inch_to_meter(float_value)
-            display = f"{entry_value} inches is {converted_value:.2f} meters"
-        elif self.SelectedButton.get() == 2:  # Meters to inches
-            converted_value = self.meter_to_inch(float_value)
-            display = f"{entry_value} meters is {converted_value:.2f} inches"
-
-        self.txtConversion.set(display)
-
-    def invalid_number_input_error(self):
-        title = "Invalid input Error"
-        message = "Please enter a valid number."
-        gui_tools.error_message(title, message)
-        self.b_clear_list()
-
-    def negative_number_error(self):
-        title = "Negative Number Error"
-        message = "Please enter a positive number."
-        gui_tools.error_message(title, message)
-        self.b_clear_list()
-
-    def inch_to_meter(self, inch_value):
-        return inch_value * 0.0254
-
-    def meter_to_inch(self, meter_value):
-        return meter_value * 39.3701
+        self.lblOutput_1 = tk.Label(self.top)
+        self.lblOutput_1.place(relx=0.4, rely=0.788, height=84, width=456)
+        self.lblOutput_1.configure(activebackground="#d9d9d9")
+        self.lblOutput_1.configure(activeforeground="black")
+        self.lblOutput_1.configure(anchor='w')
+        self.lblOutput_1.configure(background="#b0c4de")
+        self.lblOutput_1.configure(compound='left')
+        self.lblOutput_1.configure(disabledforeground="#a3a3a3")
+        self.lblOutput_1.configure(font="-family {Segoe UI} -size 16 -weight bold")
+        self.lblOutput_1.configure(foreground="#000000")
+        self.lblOutput_1.configure(highlightbackground="#d9d9d9")
+        self.lblOutput_1.configure(highlightcolor="#000000")
+        self.lblOutput_1.configure(text='''10 meters oi 234.333 inches''')
+        self.lblOutput_1.configure(textvariable=self.txtFileSave)
+        self.txtFileSave.set('''10 meters oi 234.333 inches''')
 
 def start_up():
     building_plans_conversion_support.main()
